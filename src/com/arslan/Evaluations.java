@@ -1,2 +1,4 @@
-package com.arslan;public class Evaluations {
+package com.arslan;
+
+public class Evaluations {
 }
