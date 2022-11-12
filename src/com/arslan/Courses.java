@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Courses {
+public class Courses implements CourseOfficer, courseTeacher{
 
     private int courseID;
     private  String courseName;
@@ -93,12 +93,11 @@ public class Courses {
     public void saveInFile (boolean append){
 
         try {
-            String path = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Courses.txt";
-            File keyfile = new File(path);
+            File keyfile = new File(Globals.coursesPath);
             if(!keyfile.exists()){
                 keyfile.createNewFile();
             }
-            FileWriter myWriter = new FileWriter(path, append);
+            FileWriter myWriter = new FileWriter(Globals.coursesPath, append);
             myWriter.write(Integer.toString(this.courseID) + "\n");
             myWriter.write(this.courseName + "\n");
             myWriter.write(Integer.toString(this.courseCreditHours) + "\n");

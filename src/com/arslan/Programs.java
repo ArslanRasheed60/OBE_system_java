@@ -10,7 +10,7 @@ public class Programs {
     private String programDegreeType;
     private String programName;
 
-    private List <Courses> programCoursesList;
+    private List <CourseOfficer> programCoursesList;
     private List <PLO> programPloList;
 
 
@@ -21,7 +21,7 @@ public class Programs {
         this.programCoursesList = new ArrayList<>();
         this.programPloList = new ArrayList<>();
     }
-public Programs(int programID, String  programDegreeType, String programName, List<Courses> programCoursesList, List <PLO> programPloList ){
+public Programs(int programID, String  programDegreeType, String programName, List<CourseOfficer> programCoursesList, List <PLO> programPloList ){
         this.setProgramID(programID);
         this.setProgramDegreeType(programDegreeType);
         this.setProgramName(programName);
@@ -53,14 +53,14 @@ public Programs(int programID, String  programDegreeType, String programName, Li
         return programDegreeType;
     }
 
-    public void addCourse(Courses newCourse){
+    public void addCourse(CourseOfficer newCourse){
         this.programCoursesList.add(newCourse);
     }
-    private void setProgramCoursesList(List<Courses> programCoursesList) {
+    private void setProgramCoursesList(List<CourseOfficer> programCoursesList) {
         this.programCoursesList = programCoursesList;
     }
 
-    public List<Courses> getProgramCoursesList() {
+    public List<CourseOfficer> getProgramCoursesList() {
         return programCoursesList;
     }
 
@@ -77,18 +77,17 @@ public Programs(int programID, String  programDegreeType, String programName, Li
 
     protected void saveInFile(boolean append){
         try {
-            String path = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Programs.txt";
-            File keyfile = new File(path);
+            File keyfile = new File(Globals.programsPath);
             if(!keyfile.exists()){
                 keyfile.createNewFile();
             }
-            FileWriter myWriter = new FileWriter(path, append);
+            FileWriter myWriter = new FileWriter(Globals.programsPath, append);
             myWriter.write(Integer.toString(this.programID) + "\n");
             myWriter.write(this.programName + "\n");
             myWriter.write(this.programDegreeType + "\n");
 
             String newArray = "";
-            for (Courses course :
+            for (CourseOfficer course :
                     programCoursesList) {
                 newArray = newArray.concat(Integer.toString(course.getCourseID()) + ",");
             }

@@ -2,20 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea27fda3-61f8-4426-b7e5-bc0d469b6d6a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/arslan/LearningOutcomes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/arslan/Topics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/arslan/CourseOfficer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/arslan/Globals.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/arslan/courseTeacher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/arslan/CLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/CLO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/arslan/Courses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Courses.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Evaluations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Evaluations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/arslan/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/arslan/PLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/PLO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/arslan/Programs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Programs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Teachers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Teachers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Users.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/files/Courses.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/files/Courses.txt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/Topics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Topics.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +23,7 @@
       <list>
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -44,16 +41,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "full.screen.before.presentation.mode": "false",
+    "last_opened_file_path": "C:/Users/arsla/IdeaProjects/startUp",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -63,6 +61,14 @@
       <option name="presentableId" value="Default" />
       <updated>1667141163624</updated>
     </task>
+    <task id="LOCAL-00001" summary="update files and add functionality of add programs/courses">
+      <created>1667680188785</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1667680188785</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -78,5 +84,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="update files and add functionality of add programs/courses" />
+    <option name="LAST_COMMIT_MESSAGE" value="update files and add functionality of add programs/courses" />
   </component>
 </project>

@@ -45,12 +45,11 @@ public class CLO  extends  LearningOutcomes{
 
     public void saveInFile(boolean append){
         try {
-            String path = "E:\\Development\\SDA_Assigment\\src\\com\\files\\CLOs.txt";
-            File keyfile = new File(path);
+            File keyfile = new File(Globals.closPath);
             if(!keyfile.exists()){
                 keyfile.createNewFile();
             }
-            FileWriter myWriter = new FileWriter(path, append);
+            FileWriter myWriter = new FileWriter(Globals.closPath, append);
             myWriter.write(Integer.toString(this.getId()) + "\n");
             myWriter.write(this.getDescription() + "\n");
 

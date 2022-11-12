@@ -56,12 +56,11 @@ public class Topics {
 
     protected void saveInFile(){
         try {
-            String path = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Topics.txt";
-            File keyfile = new File(path);
+            File keyfile = new File(Globals.topicPath);
             if(!keyfile.exists()){
                 keyfile.createNewFile();
             }
-            FileWriter myWriter = new FileWriter(path, true);
+            FileWriter myWriter = new FileWriter(Globals.topicPath, true);
             myWriter.write(Integer.toString(this.topicID) + "\n");
             myWriter.write(this.topicDescription + "\n");
 

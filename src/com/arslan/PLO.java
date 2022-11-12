@@ -21,12 +21,11 @@ public class PLO extends LearningOutcomes{
 
     public void saveInFile(boolean append){
         try {
-            String path = "E:\\Development\\SDA_Assigment\\src\\com\\files\\PLOs.txt";
-            File keyfile = new File(path);
+            File keyfile = new File(Globals.ploPath);
             if(!keyfile.exists()){
                 keyfile.createNewFile();
             }
-            FileWriter myWriter = new FileWriter(path, append);
+            FileWriter myWriter = new FileWriter(Globals.ploPath, append);
             myWriter.write(Integer.toString(this.getId()) + "\n");
             myWriter.write(this.getDescription() + "\n");
             myWriter.write(this.ploProgram.getProgramID() + "\n");

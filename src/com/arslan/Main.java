@@ -7,19 +7,12 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-//        Paths
-            String academicOfficersPath  = "E:\\Development\\SDA_Assigment\\src\\com\\arslan\\AcademicOfficers.txt";
-            String coursesPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Courses.txt";
-            String programsPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Programs.txt";
-            String closPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\CLOs.txt";
-//        Paths
-
         //Administrator starts here
         AcademicOfficer academicOfficer = null;
 
         try {
             //Read administrator credentials
-            File keyfile = new File(academicOfficersPath);
+            File keyfile = new File(Globals.academicOfficersPath);
             Scanner myReader = new Scanner(keyfile);
             String fullName = "", phoneNumber = "", address = "";
             while(myReader.hasNextLine()) {
@@ -55,7 +48,7 @@ public class Main {
 
                         System.out.print("Login Successfully as Administrator\n");
                         System.out.println("1: Add New Program");
-                        System.out.println("2: Delete Program");
+                        System.out.println("2: Delete Program");            //no need to delete program
                         System.out.println("3: Update Program");
                         System.out.println("4: Add New Course");
                         System.out.println("5: Delete Course");
@@ -167,13 +160,13 @@ public class Main {
 
                                     if(total > 0){
                                         System.out.println("\n\tEnter Course Id from given list:  ");
-                                        for (Courses findCourse :
+                                        for (CourseOfficer findCourse :
                                                 nProgram.getProgramCoursesList()) {
                                             System.out.println(findCourse.getCourseID() + ": -> " + findCourse.getCourseName() + " ");
                                         }
                                         int cId = getIntegerInput();
-                                        Courses nCourse = null;
-                                        for (Courses findCourse :
+                                        CourseOfficer nCourse = null;
+                                        for (CourseOfficer findCourse :
                                                 nProgram.getProgramCoursesList()) {
                                             if(findCourse.getCourseID() == cId){
                                                 nCourse = findCourse;
@@ -274,13 +267,13 @@ public class Main {
                                     total = nProgram.getProgramCoursesList().size();
                                     if(total > 0){
                                         System.out.print("Enter Course Id from given list: ");
-                                        for (Courses course :
+                                        for (CourseOfficer course :
                                                 nProgram.getProgramCoursesList()) {
                                             System.out.println(course.getCourseID() + ": -> " + course.getCourseName() + " ");
                                         }
                                         int cId = getChoiceInput(1, total);
-                                        Courses nCourse= null;
-                                        for (Courses course :
+                                        CourseOfficer nCourse= null;
+                                        for (CourseOfficer course :
                                                 nProgram.getProgramCoursesList()) {
                                             if(course.getCourseID() == cId){
                                                 nCourse = course;
@@ -380,15 +373,6 @@ public class Main {
     }
 
     public static void loadFileData(AcademicOfficer officer){
-
-//        Paths
-        String coursesPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Courses.txt";
-        String programsPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Programs.txt";
-        String closPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\CLOs.txt";
-        String ploPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\PLOs.txt";
-        String topicPath = "E:\\Development\\SDA_Assigment\\src\\com\\files\\Topics.txt";
-//        Paths
-
         try {
             List<Programs> programsList = new ArrayList<>();
             List<String> programPloList = new ArrayList<>();
@@ -412,7 +396,7 @@ public class Main {
             List<Teachers> teachersList = new ArrayList<>();
 
             //Read Program data
-            File programKeyFile = new File(programsPath);
+            File programKeyFile = new File(Globals.programsPath);
             if(programKeyFile.exists()){
                 Scanner myProgramReader = new Scanner(programKeyFile);
                 while(myProgramReader.hasNextLine()){
@@ -432,7 +416,7 @@ public class Main {
             }
 
             //Read course data
-            File courseKeyFile = new File(coursesPath);
+            File courseKeyFile = new File(Globals.coursesPath);
             if(courseKeyFile.exists()){
                 Scanner myCourseReader = new Scanner(courseKeyFile);
                 while(myCourseReader.hasNextLine()){
@@ -455,7 +439,7 @@ public class Main {
             }
 
             //Read PLO data
-            File ploKeyFile = new File(ploPath);
+            File ploKeyFile = new File(Globals.ploPath);
             if(ploKeyFile.exists()){
                 Scanner myPloReader = new Scanner(ploKeyFile);
                 while(myPloReader.hasNextLine()){
@@ -480,7 +464,7 @@ public class Main {
             }
 
             //Read CLO data
-            File cloKeyFile = new File(closPath);
+            File cloKeyFile = new File(Globals.closPath);
             if(cloKeyFile.exists()){
                 Scanner myCloReader = new Scanner(cloKeyFile);
                 while(myCloReader.hasNextLine()){
@@ -499,7 +483,7 @@ public class Main {
             }
 
             //Read Topic data
-            File topicKeyFile = new File(topicPath);
+            File topicKeyFile = new File(Globals.topicPath);
             if(topicKeyFile.exists()){
                 Scanner myTopicReader = new Scanner(topicKeyFile);
                 while(myTopicReader.hasNextLine()){
