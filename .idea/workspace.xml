@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea27fda3-61f8-4426-b7e5-bc0d469b6d6a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/arslan/LearningOutcomes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/arslan/Topics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/CLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/CLO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Courses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Courses.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Evaluations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Evaluations.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/PLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/PLO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Programs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Programs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Teachers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Teachers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Users.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/files/Courses.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/files/Courses.txt.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
