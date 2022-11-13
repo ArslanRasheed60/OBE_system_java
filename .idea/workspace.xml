@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c24793a5-5725-4fb2-8ffb-754bfbfc743b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/files/CLOs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/files/Courses.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/files/PLOs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/files/Programs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/CLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/CLO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Globals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Globals.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/arslan/PLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/PLO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +60,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667680188785</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add clo/ course/ and plo">
+      <created>1668326706153</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668326706153</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -85,6 +84,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="update files and add functionality of add programs/courses" />
-    <option name="LAST_COMMIT_MESSAGE" value="update files and add functionality of add programs/courses" />
+    <MESSAGE value="add clo/ course/ and plo" />
+    <option name="LAST_COMMIT_MESSAGE" value="add clo/ course/ and plo" />
   </component>
 </project>
