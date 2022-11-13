@@ -1,5 +1,6 @@
 package com.arslan;
 
+import javax.swing.plaf.synth.SynthLookAndFeel;
 import java.io.File;
 import java.util.*;
 import java.util.List;
@@ -195,10 +196,142 @@ public class Main {
                             }
 
                         }
-                        else if (userInput2 == 5) {
-                            //delete course
-                        } else if (userInput2 == 6) {
-                            //update course
+                         else if (userInput2 == 5 || userInput2 == 6) {
+//                        delete/update course
+                            String userData2 = userInput2 == 5 ? "delete" : "update";
+
+                            int programLength = academicOfficer.getProgramsList().size();
+                            if(programLength > 0){
+
+                                System.out.println("Enter Program ID");
+                                for (Programs program :
+                                        academicOfficer.getProgramsList()) {
+                                    System.out.println(program.getProgramID() + " : -> " + program.getProgramDegreeType() + " -> " + program.getProgramName());
+                                }
+                                int pId = getIntegerInput();
+
+                                Programs modifyProgram = null;
+                                for (Programs program :
+                                        academicOfficer.getProgramsList()) {
+                                    if(program.getProgramID() == pId){
+                                        modifyProgram = program;
+                                        break;
+                                    }
+                                }
+
+                                if(modifyProgram != null){
+                                    System.out.println("Enter Course ID");
+                                    for (CourseOfficer courses :
+                                            modifyProgram.getProgramCoursesList()) {
+                                        System.out.println(courses.getCourseID() + " : -> " + courses.getCourseName() + " ");
+                                    }
+                                    int cId = getIntegerInput();
+
+                                    CourseOfficer modifyCourse = null;
+                                    for (CourseOfficer courses :
+                                            modifyProgram.getProgramCoursesList()) {
+                                        if(courses.getCourseID() == cId){
+                                            modifyCourse = courses;
+                                            break;
+                                        }
+                                    }
+
+                                    if(userInput2 == 6 && modifyCourse != null){
+                                        //update course
+                                        System.out.print("\nWant to change Course Name? y/n: ");
+                                        char check = getCheckInput();
+                                        if(check == 'y'){
+                                            System.out.println("Enter new Course Name");
+                                            String newName = getStringInput();
+                                            modifyCourse.setCourseName(newName);
+                                        }
+                                        System.out.print("\nWant to change Course Credit Hours? y/n: ");
+                                        check = getCheckInput();
+                                        if(check == 'y'){
+                                            System.out.println("Enter new Course Credit Hours");
+                                            int newCredit = getIntegerInput();
+                                            modifyCourse.setCourseCreditHours(newCredit);
+                                        }
+                                        System.out.print("\nWant to delete Course from entered Program? y/n: ");
+                                        check = getCheckInput();
+                                        if(check == 'y'){
+                                            modifyProgram.getProgramCoursesList().remove(modifyCourse);
+                                            modifyCourse.getCourseProgramList().remove(modifyProgram);
+                                        }
+
+                                    }else if(userInput2 == 5 && modifyCourse != null){
+                                        //delete course
+                                        Globals.coursesList.remove((Courses)modifyCourse);
+
+                                        for (Programs program :
+                                                modifyCourse.getCourseProgramList()) {
+                                            program.getProgramCoursesList().remove(modifyCourse);
+                                        }
+
+                                        for (CLO clo :
+                                                modifyCourse.getCourseCloList()) {
+                                            clo.getCloCoursesList().remove((Courses)modifyCourse);
+                                            if(clo.getCloCoursesList().size() == 0){
+                                                Globals.cloList.remove(clo);
+                                                for (PLO plo:
+                                                     clo.getCloPLOList()) {
+                                                    plo.getPloCLOList().remove(clo);
+                                                }
+                                                for (Topics topics :
+                                                        clo.getCloTopicsList()) {
+                                                    topics.getTopicCLOList().remove(clo);
+                                                    if(topics.getTopicCLOList().size() == 0){
+                                                        Globals.topicsList.remove(topics);
+                                                    }
+                                                }
+                                            }
+                                        }
+
+///////////////////////////////////////////////////////////////////////////update teacher list while deleting of course
+//                                        for (Teachers teacher:
+//                                             ((Courses) modifyCourse).getCourseTeacherList()) {
+//
+//                                        }
+
+
+                                    }else{
+                                        System.out.println("!! Course not found !!");
+                                    }
+
+                                }else{
+                                    System.out.println("!! Program not found !!");
+                                }
+                            }
+                            System.out.println("\tEnter Program Id for " + userData2);
+                            int programID = getIntegerInput();
+
+                            // get program from program list with the help of id
+                            List<Programs> programsList = academicOfficer.getProgramsList();
+                            Programs manageProgram = null;
+                            for (Programs program :
+                                    programsList) {
+                                if (programID == program.getProgramID()) {
+                                    manageProgram = program;
+                                    break;
+                                }
+                            }
+                            //if id found then delete/update it
+                            if (manageProgram != null) {
+                                if (userInput2 == 2) {
+                                    academicOfficer.removeProgram(manageProgram);
+                                } else {
+                                    System.out.println("\tEnter --New-- Program Name");
+                                    String programName = getStringInput();
+                                    System.out.println("\tEnter --New-- Program Degree Type");
+                                    String programDegreeType = getStringInput();
+                                    manageProgram.setProgramName(programName);
+                                    manageProgram.setProgramDegreeType(programDegreeType);
+                                }
+                                academicOfficer.updateProgramFile();
+                                System.out.println("Program " + userData2 + " Successfully");
+                            } else {
+                                System.out.println("Invalid Program ID");
+                            }
 
                         } else if (userInput2 == 7) {
                             //list of all courses
@@ -408,6 +541,16 @@ public class Main {
         Scanner myInput = new Scanner(System.in);
         int userInput = myInput.nextInt();
         return userInput;
+    }
+
+    public static char getCheckInput(){
+        Scanner myInput = new Scanner(System.in);
+        char check = myInput.nextLine().toLowerCase().charAt(0);
+        while(check != 'y' && check != 'n'){
+            System.out.println("Wrong input . Enter Again");
+            check = myInput.nextLine().toLowerCase().charAt(0);
+        }
+        return check;
     }
 
     public static void loadFileData(AcademicOfficer officer){
@@ -802,6 +945,7 @@ public class Main {
             Globals.coursesList = coursesList;
             Globals.ploList = ploList;
             Globals.cloList = cloList;
+            Globals.topicsList = topicsList;
 
         }
         catch (Exception e){

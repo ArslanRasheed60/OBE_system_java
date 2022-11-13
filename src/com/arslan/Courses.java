@@ -40,7 +40,7 @@ public class Courses implements CourseOfficer, courseTeacher{
         return courseID;
     }
 
-    private void setCourseName(String courseName) {
+    public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
 
@@ -48,7 +48,7 @@ public class Courses implements CourseOfficer, courseTeacher{
         return courseName;
     }
 
-    private void setCourseCreditHours(int courseCreditHours) {
+    public void setCourseCreditHours(int courseCreditHours) {
         this.courseCreditHours = courseCreditHours;
     }
 

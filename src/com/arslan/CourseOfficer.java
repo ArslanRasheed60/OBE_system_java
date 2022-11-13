@@ -5,6 +5,8 @@ import java.util.List;
 public interface CourseOfficer {
 
     public int getCourseID();
+    public void setCourseName(String courseName);
+    public void setCourseCreditHours(int courseCreditHours);
     public String getCourseName();
     public int getCourseCreditHours();
     public void addProgram(Programs newProgram);

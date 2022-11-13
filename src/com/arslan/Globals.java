@@ -19,6 +19,8 @@ public class Globals {
     public static List<PLO> ploList;
     public static List<CLO> cloList;
 
+    public static List<Topics> topicsList;
+
     //
 
     //filing
