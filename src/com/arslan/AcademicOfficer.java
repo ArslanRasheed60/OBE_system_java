@@ -39,11 +39,6 @@ public class AcademicOfficer extends Users{
         return programsList;
     }
 
-    public void saveProgram(Programs program){
-        addProgram(program);
-        program.saveInFile(true);
-    }
-
     public void updateProgramFile(){
         int count = 0;
         boolean flag = false;
@@ -65,70 +60,70 @@ public class AcademicOfficer extends Users{
         return new ArrayList<T>(set);
     }
 
-    public void updateCourseFile(){
-        int count = 0;
-        boolean flag = false;
+//    public void updateCourseFile(){
+//        int count = 0;
+//        boolean flag = false;
+//
+//        int programListSize = this.programsList.size();
+//        List<Courses> coursesList = null;
+//        if(programListSize > 1){
+//            for(int i = 0;i<programListSize-1;i++){
+//                coursesList = union(this.programsList.get(i).getProgramCoursesList(),this.programsList.get(i+1).getProgramCoursesList());
+//            }
+//
+//        }else if (programListSize == 1){
+//            coursesList = this.programsList.get(0).getProgramCoursesList();
+//        }
+//        if(coursesList != null){
+//            for (Courses updateCourse :
+//                    coursesList) {
+//                flag = count >= 1;
+//                updateCourse.saveInFile(flag);
+//                count++;
+//            }
+//        }
+//    }
 
-        int programListSize = this.programsList.size();
-        List<Courses> coursesList = null;
-        if(programListSize > 1){
-            for(int i = 0;i<programListSize-1;i++){
-                coursesList = union(this.programsList.get(i).getProgramCoursesList(),this.programsList.get(i+1).getProgramCoursesList());
-            }
+//    public int currentNumberOfCourses(){
+//        int programListSize = this.programsList.size();
+//        List<Courses> coursesList = null;
+//        if(programListSize > 1){
+//            for(int i = 0;i<programListSize-1;i++){
+//                coursesList = union(this.programsList.get(i).getProgramCoursesList(),this.programsList.get(i+1).getProgramCoursesList());
+//            }
+//        }else if(programListSize == 1){
+//            coursesList = this.programsList.get(0).getProgramCoursesList();
+//        }
+//        return coursesList == null ? 0 : coursesList.size();
+//    }
 
-        }else if (programListSize == 1){
-            coursesList = this.programsList.get(0).getProgramCoursesList();
-        }
-        if(coursesList != null){
-            for (Courses updateCourse :
-                    coursesList) {
-                flag = count >= 1;
-                updateCourse.saveInFile(flag);
-                count++;
-            }
-        }
-    }
-
-    public int currentNumberOfCourses(){
-        int programListSize = this.programsList.size();
-        List<Courses> coursesList = null;
-        if(programListSize > 1){
-            for(int i = 0;i<programListSize-1;i++){
-                coursesList = union(this.programsList.get(i).getProgramCoursesList(),this.programsList.get(i+1).getProgramCoursesList());
-            }
-        }else if(programListSize == 1){
-            coursesList = this.programsList.get(0).getProgramCoursesList();
-        }
-        return coursesList == null ? 0 : coursesList.size();
-    }
-
-    public void updateCloFile(){
-        int count = 0;
-        boolean flag = false;
-
-        int programListSize = this.programsList.size();
-        if(programListSize > 1){
-            List<Courses> coursesList = null;
-            for(int i = 0;i<programListSize-1;i++){
-                coursesList = union(this.programsList.get(i).getProgramCoursesList(),this.programsList.get(i+1).getProgramCoursesList());
-            }
-            int coursesSize = coursesList.size();
-            if(coursesSize > 1){
-                List<CLO> cloList = null;
-                for(int i = 0;i<coursesSize-1;i++){
-                    cloList = union(coursesList.get(i).getCourseCloList(),coursesList.get(i+1).getCourseCloList());
-                }
-                if(cloList != null){
-                    for (CLO clo :
-                            cloList) {
-                        flag = count >= 1;
-                        clo.saveInFile(flag);
-                        count++;
-                    }
-                }
-            }
-
-        }
-    }
+//    public void updateCloFile(){
+//        int count = 0;
+//        boolean flag = false;
+//
+//        int programListSize = this.programsList.size();
+//        if(programListSize > 1){
+//            List<Courses> coursesList = null;
+//            for(int i = 0;i<programListSize-1;i++){
+//                coursesList = union(this.programsList.get(i).getProgramCoursesList(),this.programsList.get(i+1).getProgramCoursesList());
+//            }
+//            int coursesSize = coursesList.size();
+//            if(coursesSize > 1){
+//                List<CLO> cloList = null;
+//                for(int i = 0;i<coursesSize-1;i++){
+//                    cloList = union(coursesList.get(i).getCourseCloList(),coursesList.get(i+1).getCourseCloList());
+//                }
+//                if(cloList != null){
+//                    for (CLO clo :
+//                            cloList) {
+//                        flag = count >= 1;
+//                        clo.saveInFile(flag);
+//                        count++;
+//                    }
+//                }
+//            }
+//
+//        }
+//    }
 
 }

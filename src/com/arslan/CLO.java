@@ -7,16 +7,20 @@ import java.util.List;
 
 public class CLO  extends  LearningOutcomes{
     private List<Courses> cloCoursesList;
+
+    private List<PLO> cloPLOList;
     private List<Topics> cloTopicsList;
 
     public CLO(int Id, String Description){
         super(Id, Description);
         cloCoursesList = new ArrayList<>();
         cloTopicsList = new ArrayList<>();
+        cloPLOList = new ArrayList<>();
     }
-    public CLO(int Id, String Description, List<Courses> cloCoursesList,List<Topics> cloTopicsList  ){
+    public CLO(int Id, String Description, List<Courses> cloCoursesList,List<PLO> cloPLOList,List<Topics> cloTopicsList  ){
         super(Id, Description);
         this.setCloCoursesList(cloCoursesList);
+        this.setCloPLOList(cloPLOList);
         this.setCloTopicsList(cloTopicsList);
     }
 
@@ -30,6 +34,19 @@ public class CLO  extends  LearningOutcomes{
 
     public List<Courses> getCloCoursesList() {
         return cloCoursesList;
+    }
+
+
+    public void addPLO(PLO plo){
+        this.cloPLOList.add(plo);
+    }
+
+    private void setCloPLOList(List<PLO> cloPLOList) {
+        this.cloPLOList = cloPLOList;
+    }
+
+    public List<PLO> getCloPLOList() {
+        return cloPLOList;
     }
 
     public void addCloTopicList(Topics topic){
@@ -57,6 +74,13 @@ public class CLO  extends  LearningOutcomes{
             for (Courses course :
                     cloCoursesList) {
                 newArray = newArray.concat(Integer.toString(course.getCourseID()) + ",");
+            }
+            myWriter.write((newArray==""?"0":newArray) + "\n");
+
+            newArray = "";
+            for (PLO plo :
+                    cloPLOList) {
+                newArray = newArray.concat(Integer.toString(plo.getId()) + ",");
             }
             myWriter.write((newArray==""?"0":newArray) + "\n");
 
