@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="c24793a5-5725-4fb2-8ffb-754bfbfc743b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+    <list default="true" id="ea27fda3-61f8-4426-b7e5-bc0d469b6d6a" name="Changes" comment="">
+<<<<<<< HEAD
+      <change afterPath="$PROJECT_DIR$/src/com/arslan/LearningOutcomes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/arslan/Topics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/AcademicOfficer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/CLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/CLO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/Courses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Courses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/Evaluations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Evaluations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/PLO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/PLO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/Programs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Programs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/Teachers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Teachers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/arslan/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/arslan/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/files/Courses.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/files/Courses.txt.txt" beforeDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> parent of a56ba71 (update)
+>>>>>>> development
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
