@@ -90,6 +90,23 @@ public class Courses implements CourseOfficer, courseTeacher{
         return courseCloList;
     }
 
+    public void printAllCLOs(){
+        for (CLO clo :
+                this.getCourseCloList()) {
+            System.out.println(clo.getId() + " : -> " + clo.getDescription() + " ");
+        }
+    }
+
+    public CLO getCLOById(int id){
+        for (CLO clo :
+                this.getCourseCloList()) {
+            if(clo.getId() == id){
+                return clo;
+            }
+        }
+        return null;
+    }
+
     public void saveInFile (boolean append){
 
         try {

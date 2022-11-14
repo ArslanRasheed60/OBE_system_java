@@ -39,6 +39,23 @@ public class AcademicOfficer extends Users{
         return programsList;
     }
 
+    public void printAllPrograms(){
+        for (Programs program :
+                this.programsList) {
+            System.out.println(program.getProgramID() + " : -> " + program.getProgramDegreeType() + " -> " + program.getProgramName());
+        }
+    }
+
+    public Programs getProgramById(int id){
+        for (Programs program :
+                this.programsList) {
+            if (program.getProgramID() == id) {
+                return program;
+            }
+        }
+        return null;
+    }
+
     public void updateProgramFile(){
         int count = 0;
         boolean flag = false;

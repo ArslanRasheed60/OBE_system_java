@@ -64,6 +64,23 @@ public Programs(int programID, String  programDegreeType, String programName, Li
         return programCoursesList;
     }
 
+    public void printAllCourses(){
+        for (CourseOfficer course :
+                this.getProgramCoursesList()) {
+            System.out.println(course.getCourseID() + ": -> " + course.getCourseName() + " ");
+        }
+    }
+
+    public CourseOfficer getCourseById(int id){
+        for (CourseOfficer course :
+                this.programCoursesList) {
+            if(course.getCourseID() == id){
+                return course;
+            }
+        }
+        return null;
+    }
+
     public void addPlo(PLO newPlo){
         this.programPloList.add(newPlo);
     }
@@ -73,6 +90,23 @@ public Programs(int programID, String  programDegreeType, String programName, Li
 
     public List<PLO> getProgramPloList() {
         return programPloList;
+    }
+
+    public void printAllPLOs(){
+        for (PLO plo :
+                this.getProgramPloList()) {
+            System.out.println(plo.getId() + ": -> " + plo.getDescription() + " ");
+        }
+    }
+
+    public PLO getPLObyId(int id){
+        for (PLO plo:
+                this.programPloList) {
+            if(plo.getId() == id){
+                return plo;
+            }
+        }
+        return null;
     }
 
     protected void saveInFile(boolean append){

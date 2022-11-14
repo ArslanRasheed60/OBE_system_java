@@ -1,6 +1,5 @@
 package com.arslan;
 
-import javax.swing.plaf.synth.SynthLookAndFeel;
 import java.io.File;
 import java.util.*;
 import java.util.List;
@@ -40,7 +39,7 @@ public class Main {
             System.out.println("2: Login as Teacher");
             System.out.println("3: Login as Guest");
             System.out.print("Enter Choice: ");
-            int userInput = getChoiceInput(1, 3);          //get input from user
+            int userInput = getChoiceInput(1, 3);                                               //get input from user
 
             if (userInput == 1) {
                 try {
@@ -49,20 +48,20 @@ public class Main {
 
                         System.out.print("Login Successfully as Administrator\n");
                         System.out.println("1: Add New Program");
-                        System.out.println("2: Delete Program");            //no need to delete program
-                        System.out.println("3: Update Program");
-                        System.out.println("4: Add New Course");
-                        System.out.println("5: Delete Course");
-                        System.out.println("6: Update Course");
-                        System.out.println("7: Get List of all Courses");
-                        System.out.println("8: Get List of all Programs");
-                        System.out.println("9: Add PLO");
-                        System.out.println("10: Add CLO");
-                        System.out.println("11: Add Topic");
-                        int userInput2 = getChoiceInput(1, 11);          //get 2nd input from user
+                        System.out.println("2: Update Program");
+                        System.out.println("3: Add New Course");
+                        System.out.println("4: Delete Course");
+                        System.out.println("5: Update Course");
+                        System.out.println("6: Get List of all Courses");
+                        System.out.println("7: Get List of all Programs");
+                        System.out.println("8: Add PLO");
+                        System.out.println("9: Add CLO");
+                        System.out.println("10: Update CLO");
+                        System.out.println("11: Delete CLO");
+                        System.out.println("12: Add Topic");
+                        int userInput2 = getChoiceInput(1, 13);                                 //get 2nd input from user
 
-                        if (userInput2 == 1) {
-                            //Add Program
+                        if (userInput2 == 1) {                                                  //Add Program
                             System.out.println("\tEnter Program Name");
                             String programName = getStringInput();
                             System.out.println("\tEnter Program Degree Type");
@@ -73,73 +72,45 @@ public class Main {
                             }
                             programID++;
                             Programs newProgram = new Programs(programID, programDegreeType, programName);
-                            //update lists
-                            academicOfficer.addProgram(newProgram);
+
+                            academicOfficer.addProgram(newProgram);                             //update lists
                             Globals.programsList.add(newProgram);
                         }
-                        else if (userInput2 == 2 || userInput2 == 3) {
-//                        delete/update program
-                            String userData2 = userInput2 == 2 ? "delete" : "update";
-                            System.out.println("\tEnter Program Id for " + userData2);
+                        else if (userInput2 == 2) {                                             //   update program
+                            System.out.println("\tEnter Program Id for ID" );
                             int programID = getIntegerInput();
+                            Programs manageProgram = academicOfficer.getProgramById(programID);   // get program by id from officer programs
 
-                            // get program from program list with the help of id
-                            List<Programs> programsList = academicOfficer.getProgramsList();
-                            Programs manageProgram = null;
-                            for (Programs program :
-                                    programsList) {
-                                if (programID == program.getProgramID()) {
-                                    manageProgram = program;
-                                    break;
-                                }
-                            }
-                            //if id found then delete/update it
-                            if (manageProgram != null) {
-                                if (userInput2 == 2) {
-                                    academicOfficer.removeProgram(manageProgram);
-                                } else {
-                                    System.out.println("\tEnter --New-- Program Name");
-                                    String programName = getStringInput();
-                                    System.out.println("\tEnter --New-- Program Degree Type");
-                                    String programDegreeType = getStringInput();
-                                    manageProgram.setProgramName(programName);
-                                    manageProgram.setProgramDegreeType(programDegreeType);
-                                }
-                                academicOfficer.updateProgramFile();
-                                System.out.println("Program " + userData2 + " Successfully");
+                            if (manageProgram != null) {                                        //if id found then update it
+                                System.out.println("\tEnter --New-- Program Name");
+                                String programName = getStringInput();
+                                System.out.println("\tEnter --New-- Program Degree Type");
+                                String programDegreeType = getStringInput();
+                                manageProgram.setProgramName(programName);                      //update by setters
+                                manageProgram.setProgramDegreeType(programDegreeType);
+
+//                                academicOfficer.updateProgramFile();
+                                System.out.println("Program Updated Successfully");
                             } else {
                                 System.out.println("Invalid Program ID");
                             }
                         }
-                        else if (userInput2 == 4) {
-
+                        else if (userInput2 == 3) {
                             System.out.println("1: Add New Course to Program Course");
-                            System.out.println("2: Add Existing Course to other Program");
+                            System.out.println("2: Add Another Course to current Program");
                             System.out.print("Enter Choice");
                             int userInput3 = getChoiceInput(1,2);
 
                             //add new course to the program
                             int total = academicOfficer.getProgramsList().size();
-                            if(total > 0){
-                                //Entering in program
+                            if(total > 0){                                                      //Entering in program
                                 System.out.println("\nEnter Program Id from given list: ");
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    System.out.println(program.getProgramID() + " : -> " + program.getProgramDegreeType() + " -> " + program.getProgramName());
-                                }
+                                academicOfficer.printAllPrograms();                             //print program lists
                                 int pId = getIntegerInput();
-                                Programs nProgram = null;
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    if (program.getProgramID() == pId ) {
-                                        nProgram = program;
-                                        break;
-                                    }
-                                }
-                                if(userInput3 == 1 && nProgram != null){
-                                    //add new course
-                                    System.out.println("\n");
-                                    System.out.println("\tEnter course Name");
+                                Programs nProgram = academicOfficer.getProgramById(pId);        //get program by id from officer
+
+                                if(userInput3 == 1 && nProgram != null){                        //add new course
+                                    System.out.println("\n\tEnter course Name");
                                     String courseName = getStringInput();
                                     System.out.println("\tEnter creditHours");
                                     int courseCreditHours = getIntegerInput();
@@ -147,22 +118,17 @@ public class Main {
                                     int courseId = Globals.coursesList.size();
                                     courseId++;
                                     Courses newCourse = new Courses(courseId,courseName, courseCreditHours);
-                                    //update list
-                                    nProgram.addCourse(newCourse);
+
+                                    nProgram.addCourse(newCourse);                              //update lists
                                     newCourse.addProgram(nProgram);
                                     Globals.coursesList.add(newCourse);
-                                    //update file
-//                                    newCourse.saveInFile(true);
-//                                    academicOfficer.updateProgramFile();
                                     System.out.println("Course Saved Successfully");
                                 }
                                 else if (userInput3 == 2 && nProgram!=null){
-
                                     int courseLength = Globals.coursesList.size();
-
                                     if(courseLength > 0){
                                         System.out.println("\n\tEnter Course Id from given list:  ");
-                                        for (CourseOfficer findCourse :
+                                        for (CourseOfficer findCourse :                         //print all courses from OBE system
                                                 Globals.coursesList) {
                                             System.out.println(findCourse.getCourseID() + ": -> " + findCourse.getCourseName() + " ");
                                         }
@@ -174,14 +140,10 @@ public class Main {
                                                 nCourse = findCourse;
                                             }
                                         }
-                                        if(nCourse != null){
-                                            //update lists
+                                        if(nCourse != null){                                    //update lists
                                             nCourse.addProgram(nProgram);
                                             nProgram.addCourse(nCourse);
-                                            System.out.println("Course Added Successfully");
-                                            //update files
-//                                            academicOfficer.updateProgramFile();
-//                                            academicOfficer.updateCourseFile();
+                                            System.out.println("Course Linked Successfully");
                                         }else{
                                             System.out.println("!! Invalid Course ID !!");
                                         }
@@ -194,50 +156,23 @@ public class Main {
                             }else{
                                 System.out.println("!! Program does not exist !!");
                             }
-
                         }
-                         else if (userInput2 == 5 || userInput2 == 6) {
-//                        delete/update course
+                         else if (userInput2 == 4 || userInput2 == 5) {                         //  delete/update course
                             String userData2 = userInput2 == 5 ? "delete" : "update";
-
                             int programLength = academicOfficer.getProgramsList().size();
                             if(programLength > 0){
-
-                                System.out.println("Enter Program ID");
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    System.out.println(program.getProgramID() + " : -> " + program.getProgramDegreeType() + " -> " + program.getProgramName());
-                                }
+                                System.out.println("Enter Program ID from given List");
+                                academicOfficer.printAllPrograms();                             //print all programs
                                 int pId = getIntegerInput();
-
-                                Programs modifyProgram = null;
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    if(program.getProgramID() == pId){
-                                        modifyProgram = program;
-                                        break;
-                                    }
-                                }
+                                Programs modifyProgram = academicOfficer.getProgramById(pId);   //get program by id from officer
 
                                 if(modifyProgram != null){
                                     System.out.println("Enter Course ID");
-                                    for (CourseOfficer courses :
-                                            modifyProgram.getProgramCoursesList()) {
-                                        System.out.println(courses.getCourseID() + " : -> " + courses.getCourseName() + " ");
-                                    }
+                                    modifyProgram.printAllCourses();                            //print all courses from current program
                                     int cId = getIntegerInput();
+                                    CourseOfficer modifyCourse = modifyProgram.getCourseById(cId); //get course by id from program
 
-                                    CourseOfficer modifyCourse = null;
-                                    for (CourseOfficer courses :
-                                            modifyProgram.getProgramCoursesList()) {
-                                        if(courses.getCourseID() == cId){
-                                            modifyCourse = courses;
-                                            break;
-                                        }
-                                    }
-
-                                    if(userInput2 == 6 && modifyCourse != null){
-                                        //update course
+                                    if(modifyCourse != null && userInput2 == 5){                //update course
                                         System.out.print("\nWant to change Course Name? y/n: ");
                                         char check = getCheckInput();
                                         if(check == 'y'){
@@ -257,213 +192,134 @@ public class Main {
                                         if(check == 'y'){
                                             modifyProgram.getProgramCoursesList().remove(modifyCourse);
                                             modifyCourse.getCourseProgramList().remove(modifyProgram);
+                                            UpdateLinksOfDeletedCourse((Courses) modifyCourse);
                                         }
 
-                                    }else if(userInput2 == 5 && modifyCourse != null){
-                                        //delete course
-                                        Globals.coursesList.remove((Courses)modifyCourse);
+                                    }else if(userInput2 == 4 && modifyCourse != null){          //delete course
 
-                                        for (Programs program :
+                                        Globals.coursesList.remove((Courses)modifyCourse);      //delete from global
+                                        for (Programs program :                                 //delete from programs
                                                 modifyCourse.getCourseProgramList()) {
                                             program.getProgramCoursesList().remove(modifyCourse);
                                         }
+                                        UpdateLinksOfDeletedCourse((Courses) modifyCourse);  //update CLO's accordingly
+/*
+-----------------------------------------update teacher list while deleting of course---------------------------------------------
+                                        for (Teachers teacher:
+                                             ((Courses) modifyCourse).getCourseTeacherList()) {
 
-                                        for (CLO clo :
-                                                modifyCourse.getCourseCloList()) {
-                                            clo.getCloCoursesList().remove((Courses)modifyCourse);
-                                            if(clo.getCloCoursesList().size() == 0){
-                                                Globals.cloList.remove(clo);
-                                                for (PLO plo:
-                                                     clo.getCloPLOList()) {
-                                                    plo.getPloCLOList().remove(clo);
-                                                }
-                                                for (Topics topics :
-                                                        clo.getCloTopicsList()) {
-                                                    topics.getTopicCLOList().remove(clo);
-                                                    if(topics.getTopicCLOList().size() == 0){
-                                                        Globals.topicsList.remove(topics);
-                                                    }
-                                                }
-                                            }
                                         }
-
-///////////////////////////////////////////////////////////////////////////update teacher list while deleting of course
-//                                        for (Teachers teacher:
-//                                             ((Courses) modifyCourse).getCourseTeacherList()) {
-//
-//                                        }
-
+*/
 
                                     }else{
                                         System.out.println("!! Course not found !!");
                                     }
-
                                 }else{
                                     System.out.println("!! Program not found !!");
                                 }
                             }
-                            System.out.println("\tEnter Program Id for " + userData2);
-                            int programID = getIntegerInput();
-
-                            // get program from program list with the help of id
-                            List<Programs> programsList = academicOfficer.getProgramsList();
-                            Programs manageProgram = null;
-                            for (Programs program :
-                                    programsList) {
-                                if (programID == program.getProgramID()) {
-                                    manageProgram = program;
-                                    break;
-                                }
-                            }
-                            //if id found then delete/update it
-                            if (manageProgram != null) {
-                                if (userInput2 == 2) {
-                                    academicOfficer.removeProgram(manageProgram);
-                                } else {
-                                    System.out.println("\tEnter --New-- Program Name");
-                                    String programName = getStringInput();
-                                    System.out.println("\tEnter --New-- Program Degree Type");
-                                    String programDegreeType = getStringInput();
-                                    manageProgram.setProgramName(programName);
-                                    manageProgram.setProgramDegreeType(programDegreeType);
-                                }
-                                academicOfficer.updateProgramFile();
-                                System.out.println("Program " + userData2 + " Successfully");
-                            } else {
-                                System.out.println("Invalid Program ID");
-                            }
-
-                        } else if (userInput2 == 7) {
-                            //list of all courses
-
-                        } else if (userInput2 == 8) {
-                            //list of all programs
                         }
-                        else if(userInput2 == 9){
-                            //add plo
+                         else if (userInput2 == 6) {                                            //list of all courses
+                            int coursesLength = Globals.coursesList.size();
+                            if(coursesLength > 0){
+                                Globals.coursesList.sort(Comparator.comparingLong(Courses::getCourseID));
+                                for (Courses course :
+                                        Globals.coursesList) {
+                                    System.out.println(course.getCourseID() + " : -> " + course.getCourseName() + " : -> " + course.getCourseCreditHours() + " ");
+                                }
+                            }else{
+                                System.out.println("No courses Exist");
+                            }
+
+                        } else if (userInput2 == 7) {                                          //list of all programs
+                            int programLength = Globals.programsList.size();
+                            if(programLength > 0){
+                                Globals.programsList.sort(Comparator.comparingLong(Programs::getProgramID));
+                                for (Programs programs :
+                                        Globals.programsList) {
+                                    System.out.println(programs.getProgramID() + " : -> " + programs.getProgramName() + " ");
+                                }
+                            }else{
+                                System.out.println("No Program Exist");
+                            }
+                        }
+                        else if(userInput2 == 8){                                               //add plo
                             int programLength = academicOfficer.getProgramsList().size();
                             if(programLength > 0){
-
-                                System.out.println("Program ID");
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    System.out.println(program.getProgramID() + " : -> " + program.getProgramDegreeType() + " -> " + program.getProgramName());
-                                }
+                                System.out.println("Enter Program ID from given list");
+                                academicOfficer.printAllPrograms();                             //print programs from officer
                                 int pId = getIntegerInput();
+                                Programs nProgram = academicOfficer.getProgramById(pId);        //get program by id from officer
 
-                                System.out.println("Enter PLO Description");
-                                String description = getStringInput();
+                                if(nProgram != null){
+                                    System.out.println("Enter PLO Description");
+                                    String description = getStringInput();
 
-                                PLO newPlo = null;
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    if (program.getProgramID() == pId) {
-                                        int ploId = Globals.ploList.size();
-                                        ploId++;
-                                        newPlo = new PLO(ploId,program, description);
-                                        program.addPlo(newPlo);
-                                        Globals.ploList.add(newPlo);
-                                        break;
-                                    }
-                                }
+                                    int ploId = Globals.ploList.size();
+                                    ploId++;
+                                    PLO newPlo = new PLO(ploId,nProgram, description);
 
-                                if (newPlo != null) {
-                                    academicOfficer.updateProgramFile();
+                                    nProgram.addPlo(newPlo);                                     //update lists
+                                    Globals.ploList.add(newPlo);
                                     System.out.println("PLO Saved Successfully");
-                                } else {
-                                    System.out.println("Invalid PLO Program Id");
+                                }else{
+                                    System.out.println("!! Invalid Program Id !!");
                                 }
                             }else{
                                 System.out.println("!! Program does not exist !!");
                             }
                         }
-                        else if(userInput2 == 10){
-                            //add new clo to course
+                        else if(userInput2 == 9){                                               //add new clo to course
                             System.out.println("1: Add New ClO to  Course");
-                            System.out.println("2: Add Existing CLO to another course");
+                            System.out.println("2: Add Another CLO to current course");
                             System.out.print("Enter Choice");
                             int userInput3 = getChoiceInput(1,2);
 
                             int total = academicOfficer.getProgramsList().size();
-                            //enter in program
-                            if(total > 0) {
+                            if(total > 0) {                                                     //enter in program
                                 System.out.println("\nEnter Program Id from given list: ");
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    System.out.println(program.getProgramID() + " : -> " + program.getProgramDegreeType() + " -> " + program.getProgramName());
-                                }
+                                academicOfficer.printAllPrograms();                             //print programs from officer
                                 int pId = getIntegerInput();
-                                Programs nProgram = null;
-                                for (Programs program :
-                                        academicOfficer.getProgramsList()) {
-                                    if (program.getProgramID() == pId) {
-                                        nProgram = program;
-                                        break;
-                                    }
-                                }
-                                //enter in course and plo
-                                if(nProgram != null)
+                                Programs nProgram = academicOfficer.getProgramById(pId);        //get program by id from officer
+
+                                if(nProgram != null)                                            //enter in course and plo
                                 {
-                                    int ploTotal = 0, courseTotal = 0;          //how many course and plo exists
+                                    int ploTotal = 0, courseTotal = 0;                          //how many course and plo exists
                                     System.out.println("\n");
                                     courseTotal = nProgram.getProgramCoursesList().size();
                                     ploTotal = nProgram.getProgramPloList().size();
 
                                     if(courseTotal > 0 && ploTotal > 0){
+
                                         //display courses and get id from user
                                         System.out.print("Enter Course Id from given list: ");
-                                        for (CourseOfficer course :
-                                                nProgram.getProgramCoursesList()) {
-                                            System.out.println(course.getCourseID() + ": -> " + course.getCourseName() + " ");
-                                        }
+                                        nProgram.printAllCourses();                             //print all courses from current program
                                         int courseID = getIntegerInput();
+                                        CourseOfficer nCourse= nProgram.getCourseById(courseID);//get course by id
+
                                         //display plo's and get id from user
                                         System.out.print("Enter PLO Id from given list: ");
-                                        for (PLO plo :
-                                                nProgram.getProgramPloList()) {
-                                            System.out.println(plo.getId() + ": -> " + plo.getDescription() + " ");
-                                        }
+                                        nProgram.printAllPLOs();                                //print all PLO's from current program
                                         int ploID = getIntegerInput();
+                                        PLO nPlo = nProgram.getPLObyId(ploID);                  //get plo by id
 
-                                        //get course
-                                        CourseOfficer nCourse= null;
-                                        for (CourseOfficer course :
-                                                nProgram.getProgramCoursesList()) {
-                                            if(course.getCourseID() == courseID){
-                                                nCourse = course;
-                                                break;
-                                            }
-                                        }
-                                        //get plo
-                                        PLO nPlo = null;
-                                        for (PLO plo:
-                                             nProgram.getProgramPloList()) {
-                                            if(plo.getId() == ploID){
-                                                nPlo = plo;
-                                                break;
-                                            }
-                                        }
-
-                                        if(userInput3 == 1 && nCourse != null && nPlo != null){
-                                        //add clo
+                                        if(userInput3 == 1 && nCourse != null && nPlo != null){     //add clo
                                         System.out.println("\nEnter clo description");
                                         String cloDescription = getStringInput();
 
-                                        int cloId = Globals.cloList.size();
+                                        int cloId = Globals.cloList.size();                     //get clo list size
                                         cloId++;
                                         CLO newClo = new CLO(cloId, cloDescription);
 
-                                        //update links
-                                        newClo.addCloCoursesList((Courses) nCourse);
+                                        newClo.addCloCoursesList((Courses) nCourse);            //update links
                                         newClo.addPLO(nPlo);
                                         nCourse.addCLO(newClo);
                                         nPlo.addCLO(newClo);
                                         Globals.cloList.add(newClo);
-                                        //update file
-//                                        newClo.saveInFile(true);
-//                                        academicOfficer.updateCourseFile();
+                                        System.out.println("CLO Saved Successfully");
 
-                                        }else if(userInput3 == 2 && nCourse != null && nPlo != null){
+                                        }
+                                        else if(userInput3 == 2 && nCourse != null && nPlo != null){   //link clo
                                             int cloLength = Globals.cloList.size();
                                             if(cloLength > 0){
                                             System.out.print("\nEnter CLO ID from the list:  ");
@@ -474,24 +330,103 @@ public class Main {
                                                 int cin = getChoiceInput(1,cloLength);
                                                 for (CLO clo :
                                                         Globals.cloList) {
-                                                    if(cin == clo.getId()){
-                                                        //update links
+                                                    if(cin == clo.getId()){                             //update links
                                                         clo.addCloCoursesList((Courses) nCourse);
                                                         clo.addPLO(nPlo);
                                                         nCourse.addCLO(clo);
                                                         nPlo.addCLO(clo);
-                                                        //update files
-//                                                        academicOfficer.updateCourseFile();
-//                                                        academicOfficer.updateCloFile();
                                                     }
                                                 }
-
                                             }else{
                                                 System.out.println("!! ClO does not exist !!");
                                             }
                                         }
+                                    }else{
+                                        System.out.println("!! Course/PLO does not exist !!");
+                                    }
+                                }
+                            }else{
+                                System.out.println("!! Program does not exist !!");
+                            }
+                        }
+                        else if(userInput2 == 10 || userInput2 == 11){                          //update/ delete clo
 
-                                        System.out.println("CLO Saved Successfully");
+                            int programsLength = academicOfficer.getProgramsList().size();
+                            //enter in program
+                            if(programsLength > 0) {
+                                System.out.println("\nEnter Program Id from given list: ");
+                                academicOfficer.printAllPrograms();                             //printing all programs from officer
+                                int pId = getIntegerInput();
+                                Programs nProgram = academicOfficer.getProgramById(pId);        //get program by id
+
+                                //enter in course and plo
+                                if(nProgram != null)
+                                {
+                                    int ploTotal = 0, courseTotal = 0;                          //how many course and plo exists
+                                    courseTotal = nProgram.getProgramCoursesList().size();
+                                    ploTotal = nProgram.getProgramPloList().size();
+
+                                    if(courseTotal > 0 && ploTotal > 0){
+                                        System.out.print("Enter Course Id from given list: ");
+                                        nProgram.printAllCourses();                             //display courses
+                                        int courseID = getIntegerInput();
+                                        System.out.print("Enter PLO Id from given list: ");
+                                        nProgram.printAllPLOs();                                //display plo's
+                                        int ploID = getIntegerInput();
+                                        Courses nCourse= (Courses) nProgram.getCourseById(courseID);    //get course by user id
+                                        PLO nPlo = nProgram.getPLObyId(ploID);                      //get plo by user id
+
+                                        if(nCourse != null && nPlo != null){
+                                            System.out.print("\n Enter CLO id that is common in both below lists: ");
+                                            System.out.println("--------------List of CLOs in Course-------------");
+                                            nCourse.printAllCLOs();
+                                            System.out.println("--------------List of CLOs in PLOs  -------------");
+                                            nPlo.printAllCLOs();
+                                            int cloID = getIntegerInput();
+                                            CLO updateCLO = nPlo.getCLOById(cloID);
+                                            //get clo by id from plo list and verify in course list
+                                            if(updateCLO != null && nCourse.getCourseCloList().contains(updateCLO)){
+
+                                                if(userInput2 == 10){                               //update clo
+                                                    System.out.print("\nWant to change CLO Description? y/n: ");
+                                                    char check = getCheckInput();
+                                                    if(check == 'y'){
+                                                        System.out.println("Enter new Description ");
+                                                        String newValue = getStringInput();
+                                                        updateCLO.setDescription(newValue);
+                                                    }
+                                                    System.out.print("\nWant to Remove from current Course? y/n: ");
+                                                    check = getCheckInput();
+                                                    if(check == 'y'){
+                                                        nCourse.getCourseCloList().remove(updateCLO);
+                                                        updateCLO.getCloCoursesList().remove(nCourse);
+                                                        if(updateCLO.getCloCoursesList().size() == 0){      //delete clo if its course does not exist
+                                                               UpdatePLOLinksOfDeletedCLO(updateCLO);
+                                                        }
+                                                    }
+                                                    System.out.print("\nWant to Remove from current PLO? y/n: ");
+                                                    check = getCheckInput();
+                                                    if(check == 'y'){
+                                                        nPlo.getPloCLOList().remove(updateCLO);
+                                                        updateCLO.getCloPLOList().remove(nPlo);
+                                                        if(updateCLO.getCloPLOList().size() == 0){               //delete clo if its plo does not exists
+                                                            UpdateCourseLinksOfDeletedCLO(updateCLO);
+                                                        }
+                                                    }
+
+                                                }else {                         //delete clo
+                                                    Globals.cloList.remove(updateCLO);
+                                                    UpdatePLOLinksOfDeletedCLO(updateCLO);
+                                                    UpdateCourseLinksOfDeletedCLO(updateCLO);
+                                                }
+                                            }else{
+                                                System.out.println("!! Invalid Input Id !!");
+                                            }
+                                        }else{
+                                            System.out.println("!! Invalid Course/PLO ID !!");
+                                        }
+
+                                        System.out.println("CLO Updated Successfully");
 
                                     }else{
                                         System.out.println("!! Course/PLO does not exist !!");
@@ -501,8 +436,90 @@ public class Main {
                                 System.out.println("!! Program does not exist !!");
                             }
 
-                        }else if(userInput2 == 11){
-                            //add topic
+                        }
+                        else if(userInput2 == 12){                                              // add topic
+
+                            System.out.println("1: Add new Topic to CLO");
+                            System.out.println("2: Add Another Topic to current CLO");
+                            System.out.print("Enter Choice");
+                            int userInput3 = getChoiceInput(1,2);
+
+                            int total = academicOfficer.getProgramsList().size();
+                            if(total > 0) {                                                     //enter in program
+                                System.out.println("\nEnter Program Id from given list: ");
+                                academicOfficer.printAllPrograms();                             //print programs from officer
+                                int pId = getIntegerInput();
+                                Programs nProgram = academicOfficer.getProgramById(pId);        //get program by id from officer
+
+                                if(nProgram != null)                                            //enter in course and plo
+                                {
+                                    int ploTotal = 0, courseTotal = 0;                          //how many course and plo exists
+                                    System.out.println("\n");
+                                    courseTotal = nProgram.getProgramCoursesList().size();
+                                    ploTotal = nProgram.getProgramPloList().size();
+
+                                    if(courseTotal > 0 && ploTotal > 0){                //display courses and get id from user
+                                        System.out.print("Enter Course Id from given list: ");
+                                        nProgram.printAllCourses();                             //print all courses from current program
+                                        int courseID = getIntegerInput();
+                                        CourseOfficer nCourse= nProgram.getCourseById(courseID);//get course by id
+
+                                        if(nCourse != null){                            //display CLOs and get id from user
+                                            System.out.print("Enter CLO Id from given list: ");
+                                            nCourse.printAllCLOs();                             //print all CLOs from current course
+                                            int cloID = getIntegerInput();
+                                            CLO nCLO= nCourse.getCLOById(cloID);                //get course by id
+
+                                            if(nCLO != null){
+                                                if(userInput3 == 1){                            //Add new topic
+                                                    System.out.println("Enter Topic Description: ");
+                                                    String desc = getStringInput();
+
+                                                    int tID = Globals.topicsList.size() + 1;
+                                                    Topics newTopic = new Topics(tID,desc);
+
+                                                    newTopic.addTopicClo(nCLO);                 //update links
+                                                    nCLO.addCloTopicList(newTopic);
+                                                    Globals.topicsList.add(newTopic);
+                                                }else{
+                                                    if(Globals.topicsList.size() > 0){
+                                                        System.out.println("Enter Topic Id from given lists: ");
+                                                        for (Topics topic :
+                                                                Globals.topicsList) {
+                                                            System.out.println(topic.getTopicID() + " : -> " + topic.getTopicDescription() + " ");
+                                                        }
+                                                        int tId = getIntegerInput();
+
+                                                        Topics nTopic = null;
+                                                        for (Topics topic :
+                                                                Globals.topicsList) {
+                                                            if(topic.getTopicID() == tId){
+                                                                nTopic = topic;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if(nTopic != null){                    //update links
+                                                            nTopic.getTopicCLOList().add(nCLO);
+                                                            nCLO.getCloTopicsList().add(nTopic);
+                                                        }else{
+                                                            System.out.println("Invalid topic id");
+                                                        }
+                                                    }else{
+                                                        System.out.println("!! topic does not exist !!");
+                                                    }
+                                                }
+                                                System.out.println("Updated Successfully");
+                                            }else{
+                                                System.out.println("!! CLO does not exist !!");
+                                            }
+                                        }
+                                    }else{
+                                        System.out.println("!! Course/PLO does not exist !!");
+                                    }
+                                }
+                            }else{
+                                System.out.println("!! Program does not exist !!");
+                            }
                         }
                     }
                 } catch (Exception e) {
@@ -519,8 +536,47 @@ public class Main {
         Globals.saveCourse();
         Globals.savePLO();
         Globals.saveCLO();
+        Globals.saveTopic();
     }
 
+    public static void UpdateTopicLinksOfDeletedCLO(CLO clo){
+        for (Topics topics :                            //if topic got deleted, update clo accordingly
+                clo.getCloTopicsList()) {
+            topics.getTopicCLOList().remove(clo);
+            if(topics.getTopicCLOList().size() == 0){
+                Globals.topicsList.remove(topics);
+                topics.getTopicCLOList().remove(clo);
+            }
+        }
+    }
+
+    public static void UpdateCourseLinksOfDeletedCLO(CLO clo){
+        Globals.cloList.remove(clo);
+        for (Courses course:                                   //if clo got deleted, update course accordingly
+                clo.getCloCoursesList()) {
+            course.getCourseCloList().remove(clo);
+        }
+        UpdateTopicLinksOfDeletedCLO(clo);
+    }
+
+    public static void UpdatePLOLinksOfDeletedCLO(CLO clo){
+        Globals.cloList.remove(clo);
+        for (PLO plo:                                   //if clo got deleted, update plo accordingly
+                clo.getCloPLOList()) {
+            plo.getPloCLOList().remove(clo);
+        }
+        UpdateTopicLinksOfDeletedCLO(clo);
+    }
+
+    public static void UpdateLinksOfDeletedCourse(Courses modifyCourse){
+        for (CLO clo :                                          //delete from clo
+                modifyCourse.getCourseCloList()) {
+            clo.getCloCoursesList().remove((Courses)modifyCourse);
+            if(clo.getCloCoursesList().size() == 0){            //update clo accordingly
+                UpdatePLOLinksOfDeletedCLO(clo);
+            }
+        }
+    }
     public static int getChoiceInput(int start, int end){
         Scanner myInput = new Scanner(System.in);
         int userInput = myInput.nextByte();
@@ -534,13 +590,11 @@ public class Main {
 
     public static String getStringInput(){
         Scanner myInput = new Scanner(System.in);
-        String userInput = myInput.nextLine();
-        return userInput;
+        return myInput.nextLine();
     }
     public static int getIntegerInput(){
         Scanner myInput = new Scanner(System.in);
-        int userInput = myInput.nextInt();
-        return userInput;
+        return myInput.nextInt();
     }
 
     public static char getCheckInput(){

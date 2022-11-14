@@ -54,13 +54,13 @@ public class Topics {
         return topicCLOList;
     }
 
-    protected void saveInFile(){
+    protected void saveInFile(boolean append){
         try {
             File keyfile = new File(Globals.topicPath);
             if(!keyfile.exists()){
                 keyfile.createNewFile();
             }
-            FileWriter myWriter = new FileWriter(Globals.topicPath, true);
+            FileWriter myWriter = new FileWriter(Globals.topicPath, append);
             myWriter.write(Integer.toString(this.topicID) + "\n");
             myWriter.write(this.topicDescription + "\n");
 

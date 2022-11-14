@@ -13,6 +13,8 @@ public interface CourseOfficer {
     public List<Programs> getCourseProgramList();
     public void addCLO(CLO clo);
     public List<CLO> getCourseCloList();
+    public void printAllCLOs();
+    public CLO getCLOById(int id);
     public void saveInFile(boolean append);
 
 }

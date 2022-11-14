@@ -21,7 +21,7 @@ public class Globals {
 
     public static List<Topics> topicsList;
 
-    //
+    //Lists
 
     //filing
     public static void saveCourse(){
@@ -72,6 +72,19 @@ public class Globals {
             count++;
         }
     }
+
+    public static void saveTopic(){
+        int count = 0;
+        boolean flag = false;
+
+        for (Topics topic :
+                topicsList) {
+            flag = count >= 1;
+            topic.saveInFile(flag);
+            count++;
+        }
+    }
+
 
     //filing
 

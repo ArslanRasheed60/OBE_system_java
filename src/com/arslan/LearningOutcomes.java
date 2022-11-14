@@ -13,7 +13,7 @@ public class LearningOutcomes {
     public int getId() {
         return Id;
     }
-    private void setDescription(String description) {
+    public void setDescription(String description) {
         Description = description;
     }
     public String getDescription() {

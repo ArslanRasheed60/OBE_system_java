@@ -35,6 +35,24 @@ public class PLO extends LearningOutcomes{
         return ploCLOList;
     }
 
+    public void printAllCLOs(){
+        for (CLO clo :
+                this.ploCLOList) {
+            System.out.println(clo.getId() + " : -> " + clo.getDescription() + " ");
+        }
+    }
+
+    public CLO getCLOById(int id){
+        for (CLO clo :
+                this.ploCLOList) {
+            if(clo.getId() == id){
+                return clo;
+            }
+        }
+        return null;
+    }
+
+
     public void saveInFile(boolean append){
         try {
             File keyfile = new File(Globals.ploPath);
