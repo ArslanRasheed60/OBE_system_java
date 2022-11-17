@@ -90,6 +90,10 @@ public class Courses implements CourseOfficer, courseTeacher{
         return courseCloList;
     }
 
+    public void printCourseDetails(){
+        System.out.println(this.courseID + ": -> " + this.courseName + " ");
+    }
+
     public void printAllCLOs(){
         for (CLO clo :
                 this.getCourseCloList()) {

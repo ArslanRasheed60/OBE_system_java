@@ -2,8 +2,13 @@ package com.arslan;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.PosixFileAttributes;
+import java.nio.file.attribute.PosixFilePermission;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CLO  extends  LearningOutcomes{
     private List<Courses> cloCoursesList;
@@ -75,14 +80,14 @@ public class CLO  extends  LearningOutcomes{
                     cloCoursesList) {
                 newArray = newArray.concat(Integer.toString(course.getCourseID()) + ",");
             }
-            myWriter.write((newArray==""?"0":newArray) + "\n");
+            myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
 
             newArray = "";
             for (PLO plo :
                     cloPLOList) {
                 newArray = newArray.concat(Integer.toString(plo.getId()) + ",");
             }
-            myWriter.write((newArray==""?"0":newArray) + "\n");
+            myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
 
             newArray = "";
             for (Topics topic :
@@ -90,7 +95,7 @@ public class CLO  extends  LearningOutcomes{
                 newArray = newArray.concat(Integer.toString(topic.getTopicID()) + ",");
             }
 
-            myWriter.write((newArray==""?"0":newArray) + "\n");
+            myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
             myWriter.close();
 
         } catch (Exception e) {

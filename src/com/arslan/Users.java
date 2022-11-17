@@ -4,17 +4,21 @@ public class Users {
 //    private int id;
     private String fullName;
     private String phoneNumber;
-
     private String address;
 
+    private String username;
+
+    private String password;
 
     public Users (){
 
     }
-    public Users(String fullName, String phoneNumber, String address){
+    public Users(String fullName, String phoneNumber, String address, String username, String password){
         this.setFullName(fullName);
         this.setPhoneNumber(phoneNumber);
         this.setAddress(address);
+        this.setUsername(username);
+        this.setPassword(password);
     }
 
 
@@ -43,6 +47,22 @@ public class Users {
 
     private void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

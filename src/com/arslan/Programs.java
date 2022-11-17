@@ -67,7 +67,6 @@ public Programs(int programID, String  programDegreeType, String programName, Li
     public void printAllCourses(){
         for (CourseOfficer course :
                 this.getProgramCoursesList()) {
-            System.out.println(course.getCourseID() + ": -> " + course.getCourseName() + " ");
         }
     }
 
@@ -125,14 +124,14 @@ public Programs(int programID, String  programDegreeType, String programName, Li
                     programCoursesList) {
                 newArray = newArray.concat(Integer.toString(course.getCourseID()) + ",");
             }
-            myWriter.write((newArray==""?"0":newArray) + "\n");
+            myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
 
             newArray = "";
             for (PLO plo :
                     programPloList) {
                 newArray = newArray.concat(Integer.toString(plo.getId()) + ",");
             }
-            myWriter.write((newArray==""?"0":newArray) + "\n");
+            myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
 
             myWriter.close();
         }catch (Exception e){

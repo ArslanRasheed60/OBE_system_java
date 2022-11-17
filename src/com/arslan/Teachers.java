@@ -1,17 +1,21 @@
 package com.arslan;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Teachers extends Users{
+public class Teachers extends Users {
     private int teacherID;
-    private List<Courses> coursesList;
-    private List<CLO> cloList;
+    private List<courseTeacher> coursesList;
     private List<Evaluations> evaluationsList;
 
 
-    public Teachers(int teacherId,String fullName, String phoneNumber, String address){
-        super(fullName, phoneNumber, address);
+    public Teachers(int teacherId, String fullName, String phoneNumber, String address, String username, String password) {
+        super(fullName, phoneNumber, address, username, password);
         this.setTeacherID(teacherId);
+        this.coursesList = new ArrayList<>();
+        this.evaluationsList = new ArrayList<>();
     }
 
     private void setTeacherID(int teacherID) {
@@ -20,5 +24,83 @@ public class Teachers extends Users{
 
     public int getTeacherID() {
         return teacherID;
+    }
+
+    public void setCoursesList(List<courseTeacher> coursesList) {
+        this.coursesList = coursesList;
+    }
+
+    public List<courseTeacher> getCoursesList() {
+        return coursesList;
+    }
+
+    public void addEvaluation(Evaluations evaluations) {
+        this.evaluationsList.add(evaluations);
+    }
+
+    public void setEvaluationsList(List<Evaluations> evaluationsList) {
+        this.evaluationsList = evaluationsList;
+    }
+
+    public List<Evaluations> getEvaluationsList() {
+        return evaluationsList;
+    }
+
+    public void printCourses() {
+        for (courseTeacher course :
+                this.coursesList) {
+            course.printCourseDetails();
+        }
+    }
+
+    public courseTeacher getCourseById(int id) {
+        for (courseTeacher course :
+                this.coursesList) {
+            if (course.getCourseID() == id) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    public boolean testCLO(CLO clo){
+        int count = 0;
+        for (Evaluations evaluations:
+             evaluationsList) {
+            for (Questions questions: evaluations.questionsList) {
+                if(questions.getClo() == clo){
+                    count++;
+                    if(count == 2){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void saveInFile ( boolean append){
+        try {
+            File keyfile = new File(Globals.teachersPath);
+            if (!keyfile.exists()) {
+                keyfile.createNewFile();
+            }
+            FileWriter myWriter = new FileWriter(Globals.teachersPath, append);
+            myWriter.write(Integer.toString(this.getTeacherID()) + "\n");
+/*
+            myWriter.write(this.getDescription() + "\n");
+            String newArray = "";
+            for (Courses course :
+                    cloCoursesList) {
+                newArray = newArray.concat(Integer.toString(course.getCourseID()) + ",");
+            }
+            myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
+*/
+            myWriter.close();
+
+        } catch (Exception e) {
+            System.out.println("An Error Occurred + " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

@@ -12,12 +12,12 @@ public class AcademicOfficer extends Users{
     private List<Programs> programsList;
 
     public AcademicOfficer(){
-        super(null,null,null);
+        super(null,null,null,null,null);
         isAcademicOfficer=false;
     }
 
-    public AcademicOfficer (String fullName, String phoneNumber, String address){
-        super(fullName,phoneNumber, address);
+    public AcademicOfficer (String fullName, String phoneNumber, String address, String username, String password){
+        super(fullName,phoneNumber, address, username, password);
         programsList = new ArrayList<>();
 
         if(fullName.length() > 2){
