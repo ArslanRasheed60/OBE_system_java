@@ -1,10 +1,10 @@
 1
-Computer Science
+Compter Science
 BS
-2,
-1,2,
+2,4,
+1,
 2
-ee
-bs
-0
+Electrical 
+BS
+3,4,
 0
