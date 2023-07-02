@@ -8,19 +8,38 @@ public abstract class Evaluations {
     protected Teachers teacher;
     protected List<Questions> questionsList;
 
-    public abstract int getId();
+        public int getId(){
+        return id;
+    }
 
-    public abstract void addQuestions(Questions questions);
-    public abstract void setQuestionsList();
-    public abstract List<Questions> getQuestionsList();
+    public void addQuestions(Questions questions) {
+        this.questionsList.add(questions);
+    }
 
-    public abstract Questions getQuestionsById(int id);
+    public Teachers getTeacher() {
+        return this.teacher;
+    }
+    public void printEvaluationDetails(){
+        System.out.println(this.id + " : -> " + this.EvaluationName);
+    }
 
-    public abstract Teachers getTeacher();
+    public void setEvaluationName(String name){
+        this.EvaluationName = name;
+    }
 
-    public abstract void printEvaluationDetails();
+    public Questions getQuestionsById(int id) {
+        for (Questions question :
+                this.questionsList) {
+            if (question.getId() == id) {
+                return question;
+            }
+        }
+        return null;
+    }
 
-    public abstract void setEvaluationName(String name);
+    public List<Questions> getQuestionsList() {
+        return this.questionsList;
+    }
 
     public abstract void saveInFile(boolean append);
 

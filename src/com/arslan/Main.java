@@ -1,41 +1,18 @@
 package com.arslan;
 
-import java.io.File;
 import java.util.*;
-import java.util.List;
 
 import static com.arslan.Globals.*;
 
 public class Main {
     public static void main(String[] args) {
-
         //Administrator starts here
-        AcademicOfficer academicOfficer = null;
+        AcademicOfficer academicOfficer = LoadFiles.ReadAcademicOfficerCredentials();                     //Read administrator credentials
 
-        try {
-            //Read administrator credentials
-            File keyfile = new File(Globals.academicOfficersPath);
-            Scanner myReader = new Scanner(keyfile);
-            String fullName = "", phoneNumber = "", address = "", username = "", password = "";
-            while(myReader.hasNextLine()) {
-
-                fullName = myReader.nextLine();
-                phoneNumber = myReader.nextLine();
-                address = myReader.nextLine();
-                username = myReader.nextLine();
-                password = myReader.nextLine();
-            }
-            myReader.close();
-            academicOfficer = new AcademicOfficer(fullName, phoneNumber, address, username, password);
-
-        } catch (Exception e) {
-            System.out.println("An Error Occurred + " + e.getMessage());
-        }
         //Basic Administrator StartUp to read files (End)
         if(academicOfficer != null) {
             //load files
-            loadFileData(academicOfficer);
-
+            LoadFiles.loadFileData(academicOfficer);
                             //Start Interface
                 System.out.print("**************************** OBE *****************************\n");
                 System.out.println("1: Login as Administrator");
@@ -48,7 +25,6 @@ public class Main {
                 if (userInput == 1) {
                     try {
                         //************************ Login or administrator is implemented here*********************************
-
                         System.out.println("Enter username ");
                         String username = getStringInput();
                         System.out.println("Enter password");
@@ -56,8 +32,8 @@ public class Main {
 
                         boolean verifyAdmin = verifyAdministrator(username, password);
 
-                        if (AcademicOfficer.isAcademicOfficer && verifyAdmin) {
-                            int userInput2 = 0;
+                        if (verifyAdmin) {
+                            int userInput2;
 
                                 System.out.print("Login Successfully as Administrator\n");
                             do {
@@ -85,12 +61,7 @@ public class Main {
                                     System.out.println("\tEnter Program Degree Type");
                                     String programDegreeType = getStringInput();
 
-                                    int programID = academicOfficer.getProgramsList().size();
-                                    if (programID > 0) {                                            //sort and get program id
-                                        academicOfficer.getProgramsList().sort(Comparator.comparingLong(Programs::getProgramID));
-                                        programID = academicOfficer.getProgramsList().get(programID - 1).getProgramID();
-                                    }
-                                    programID++;
+                                    int programID = generateProgramId(academicOfficer);             //get new program id
                                     Programs newProgram = new Programs(programID, programDegreeType, programName);
 
                                     if (!(isDuplicateProgram(newProgram))) {
@@ -100,7 +71,8 @@ public class Main {
                                     } else {
                                         System.out.println("Program already exists");
                                     }
-                                } else if (userInput2 == 2) {                                             //   update program
+                                }
+                                else if (userInput2 == 2) {                                             //   update program
                                     if (academicOfficer.getProgramsList().size() > 0) {
                                         System.out.println("\tEnter Program Id for ID from given list");
                                         academicOfficer.printAllPrograms();
@@ -114,8 +86,6 @@ public class Main {
                                             String programDegreeType = getStringInput();
                                             manageProgram.setProgramName(programName);                      //update by setters
                                             manageProgram.setProgramDegreeType(programDegreeType);
-
-//                                academicOfficer.updateProgramFile();
                                             System.out.println("Program Updated Successfully");
                                         } else {
                                             System.out.println("Invalid Program ID");
@@ -144,17 +114,11 @@ public class Main {
                                             System.out.println("\tEnter creditHours");
                                             int courseCreditHours = getIntegerInput();
                                             //get course id
-                                            int courseId = coursesList.size();
-                                            if (courseId > 0) {
-                                                coursesList.sort(Comparator.comparingLong(Courses::getCourseID));
-                                                courseId = coursesList.get(coursesList.size() - 1).getCourseID();
-                                            }
-                                            courseId++;
+                                            int courseId = generateCourseId();                          //get new course id
                                             Courses newCourse = new Courses(courseId, courseName, courseCreditHours);
 
                                             if (!(isDuplicateCourse(newCourse, coursesList))) {
-                                                nProgram.addCourse(newCourse);                              //update lists
-                                                newCourse.addProgram(nProgram);
+                                                academicOfficer.addCourse(nProgram, newCourse);               //update lists
                                                 Globals.coursesList.add(newCourse);
                                                 System.out.println("Course Saved Successfully");
                                             } else {
@@ -297,12 +261,7 @@ public class Main {
                                             System.out.println("Enter PLO Description");
                                             String description = getStringInput();
 
-                                            int ploId = ploList.size();
-                                            if (ploId > 0) {
-                                                ploList.sort(Comparator.comparingLong(PLO::getId));
-                                                ploId = ploList.get(ploList.size() - 1).getId();
-                                            }
-                                            ploId++;
+                                            int ploId = generatePloId();                                //generate new plo id
                                             PLO newPlo = new PLO(ploId, nProgram, description);
 
                                             if (!(isDuplicatePLO(newPlo))) {
@@ -334,7 +293,7 @@ public class Main {
 
                                         if (nProgram != null)                                            //enter in course and plo
                                         {
-                                            int ploTotal = 0, courseTotal = 0;                          //how many course and plo exists
+                                            int ploTotal, courseTotal;                          //how many course and plo exists
                                             System.out.println("\n");
                                             courseTotal = nProgram.getProgramCoursesList().size();
                                             ploTotal = nProgram.getProgramPloList().size();
@@ -357,12 +316,7 @@ public class Main {
                                                     System.out.println("\nEnter clo description");
                                                     String cloDescription = getStringInput();
 
-                                                    int cloId = Globals.cloList.size();                     //get clo list size
-                                                    if (cloId > 0) {
-                                                        cloList.sort(Comparator.comparingLong(CLO::getId));
-                                                        cloId = cloList.get(cloList.size() - 1).getId();
-                                                    }
-                                                    cloId++;
+                                                    int cloId = generateCloId();                        //generate clo id
                                                     CLO newClo = new CLO(cloId, cloDescription);
 
                                                     if (!(isDuplicateCLO(newClo, cloList))) {
@@ -426,7 +380,7 @@ public class Main {
 
                                         //enter in course and plo
                                         if (nProgram != null) {
-                                            int ploTotal = 0, courseTotal = 0;                          //how many course and plo exists
+                                            int ploTotal, courseTotal;                          //how many course and plo exists
                                             courseTotal = nProgram.getProgramCoursesList().size();
                                             ploTotal = nProgram.getProgramPloList().size();
 
@@ -521,7 +475,7 @@ public class Main {
 
                                         if (nProgram != null)                                            //enter in course and plo
                                         {
-                                            int ploTotal = 0, courseTotal = 0;                          //how many course and plo exists
+                                            int ploTotal, courseTotal;                          //how many course and plo exists
                                             System.out.println("\n");
                                             courseTotal = nProgram.getProgramCoursesList().size();
                                             ploTotal = nProgram.getProgramPloList().size();
@@ -543,12 +497,7 @@ public class Main {
                                                             System.out.println("Enter Topic Description: ");
                                                             String desc = getStringInput();
 
-                                                            int tID = Globals.topicsList.size();
-                                                            if (tID > 0) {
-                                                                topicsList.sort(Comparator.comparingLong(Topics::getTopicID));
-                                                                tID = topicsList.get(topicsList.size() - 1).getTopicID();
-                                                            }
-                                                            tID++;
+                                                            int tID = generateTopicId();
                                                             Topics newTopic = new Topics(tID, desc);
 
                                                             if (!(isDuplicateTopic(newTopic, topicsList))) {
@@ -654,7 +603,7 @@ public class Main {
                     if (teacher != null) {
 //                    System.out.println("-------------------- ( Welcome " + );
 
-                        int userInput2 = 0;
+                        int userInput2;
                         do {
                             System.out.println("*******************************");
                             System.out.println("1: Add Evaluation");
@@ -692,12 +641,7 @@ public class Main {
                                                     System.out.println("Enter Statement for Question: ");
                                                     String statement = getStringInput();
                                                     //calling question constructor
-                                                    int qID = questionsList.size();
-                                                    if(qID > 0) {
-                                                        Globals.questionsList.sort(Comparator.comparingLong(Questions::getId));
-                                                        qID = Globals.questionsList.get(Globals.questionsList.size() - 1).getId();
-                                                    }
-                                                    qID++;
+                                                    int qID = generateQuestionId();                             //generating question id
                                                     newQuestions = new Questions(qID, statement, clo);
                                                     questionsList.add(newQuestions);                                //add in global array
                                                 }
@@ -732,17 +676,12 @@ public class Main {
                                                     System.out.println("3: Add in Exams");
                                                     int userInput3 = getChoiceInput(1, 3);
 
-                                                    int evaluationId = evaluationsList.size();
-                                                    if (evaluationId > 0) {
-                                                        Globals.evaluationsList.sort(Comparator.comparingLong(Evaluations::getId));
-                                                        evaluationId = evaluationsList.get((evaluationsList.size() - 1)).getId();
-                                                    }
-                                                    evaluationId++;
+                                                    int evaluationId = generateEvaluationId();                      //generating new evaluation id
 
                                                     System.out.println("Enter Evaluation Name: ");
                                                     String eName = getStringInput();
 
-                                                    Evaluations evaluations = null;
+                                                    Evaluations evaluations;
 
                                                     if (userInput3 == 1) {
                                                         //teacher is making question here
@@ -864,7 +803,6 @@ public class Main {
                                         }
                                     }
                                     if (modifyQuestion != null) {
-
                                         //verify it belongs to the teacher or not
                                         boolean verify = verifyQuestionAndTeacher(modifyQuestion, teacher);
 
@@ -983,624 +921,10 @@ public class Main {
     public static void UpdateLinksOfDeletedCourse(Courses modifyCourse){
         for (CLO clo :                                          //delete from clo
                 modifyCourse.getCourseCloList()) {
-            clo.getCloCoursesList().remove((Courses)modifyCourse);
+            clo.getCloCoursesList().remove(modifyCourse);
             if(clo.getCloCoursesList().size() == 0){            //update clo accordingly
                 UpdatePLOLinksOfDeletedCLO(clo);
             }
         }
     }
-
-
-    public static void loadFileData(AcademicOfficer officer){
-        try {
-            //Programs
-//            List<Programs> fileProgramsList = new ArrayList<>();
-            programsList = new ArrayList<>();
-            List<String> programPloList = new ArrayList<>();
-            List<String> programCoursesList = new ArrayList<>();
-
-            //Courses
-//            List<Courses> fileCoursesList = new ArrayList<>();
-            coursesList = new ArrayList<>();
-            List<String> courseProgramsList = new ArrayList<>();
-            List<String> courseTeachersList = new ArrayList<>();
-            List<String> courseCloList = new ArrayList<>();
-
-            //PLO
-//            List<PLO> filePloList = new ArrayList<>();
-            ploList = new ArrayList<>();
-            List<String> ploCloList = new ArrayList<>();
-
-            //CLO
-//            List<CLO> fileCloList = new ArrayList<>();
-            cloList = new ArrayList<>();
-            List<String> cloCourseList = new ArrayList<>();
-            List<String> cloPLOList = new ArrayList<>();
-            List<String> cloTopicList = new ArrayList<>();
-
-            //topics
-//            List<Topics> fileTopicsList = new ArrayList<>();
-            topicsList = new ArrayList<>();
-            List<String> topicCloList = new ArrayList<>();
-
-            //teacher
-//            List<Teachers> fileTeachersList = new ArrayList<>();
-            teachersList = new ArrayList<>();
-            List<String> teacherCourseList = new ArrayList<>();
-            List<String> teacherEvaluationList = new ArrayList<>();
-
-            //Evaluation
-//            List<Evaluations> fileEvaluationsList = new ArrayList<>();
-            evaluationsList = new ArrayList<>();
-            List<String> evaluationQuestionList = new ArrayList<>();
-
-            //Questions
-//            List<Questions> fileQuestionsList = new ArrayList<>();
-            questionsList = new ArrayList<>();
-
-            //Read Program data
-            File programKeyFile = new File(programsPath);
-            if(programKeyFile.exists()){
-                Scanner myProgramReader = new Scanner(programKeyFile);
-                while(myProgramReader.hasNextLine()){
-                    int pId = Integer.parseInt(myProgramReader.nextLine());
-                    String pName = myProgramReader.nextLine();
-                    String pDegreeType = myProgramReader.nextLine();
-                    String pCourseList = myProgramReader.nextLine();
-                    String pPloList = myProgramReader.nextLine();
-
-                    Programs newProgram = new Programs(pId, pDegreeType, pName);
-                    //add in lists;
-                    programsList.add(newProgram);
-
-                    programCoursesList.add(pCourseList);
-                    programPloList.add(pPloList);
-                }
-            }
-
-            //Read course data
-            File courseKeyFile = new File(coursesPath);
-            if(courseKeyFile.exists()){
-                Scanner myCourseReader = new Scanner(courseKeyFile);
-                while(myCourseReader.hasNextLine()){
-                    int cId = Integer.parseInt(myCourseReader.nextLine());
-                    String cName = myCourseReader.nextLine();
-                    int cCreditHours = Integer.parseInt(myCourseReader.nextLine());
-                    String cProgramList = myCourseReader.nextLine();
-                    String cTeacherList = myCourseReader.nextLine();
-                    String cCloList = myCourseReader.nextLine();
-
-                    Courses newCourse = new Courses(cId, cName, cCreditHours);
-                    // add in list
-                    coursesList.add(newCourse);
-                    courseProgramsList.add(cProgramList);
-                    courseTeachersList.add(cTeacherList);
-                    courseCloList.add(cCloList);
-
-
-                }
-            }
-
-            //Read PLO data
-            File ploKeyFile = new File(ploPath);
-            if(ploKeyFile.exists()){
-                Scanner myPloReader = new Scanner(ploKeyFile);
-                while(myPloReader.hasNextLine()){
-                    int ploId = Integer.parseInt(myPloReader.nextLine());
-                    String ploDescription = myPloReader.nextLine();
-                    int ploProgramId = Integer.parseInt(myPloReader.nextLine());
-                    String pCLOList = myPloReader.nextLine();
-
-                    Programs getProgram = null;
-
-                    for (Programs program :
-                            programsList) {
-                        if (program.getProgramID() == ploProgramId) {
-                            getProgram = program;
-                            break;
-                        }
-                    }
-
-                    PLO newPlo = new PLO(ploId, getProgram, ploDescription);
-                    //add in list
-                    ploList.add(newPlo);
-                    ploCloList.add(pCLOList);
-                }
-            }
-
-            //Read CLO data
-            File cloKeyFile = new File(closPath);
-            if(cloKeyFile.exists()){
-                Scanner myCloReader = new Scanner(cloKeyFile);
-                while(myCloReader.hasNextLine()){
-                    int cloId = Integer.parseInt(myCloReader.nextLine());
-                    String cloDescription = myCloReader.nextLine();
-                    String cloCList = myCloReader.nextLine();
-                    String cloPList = myCloReader.nextLine();
-                    String cloTList = myCloReader.nextLine();
-
-                    CLO newClo = new CLO(cloId, cloDescription);
-
-                    //add in list
-                    cloList.add(newClo);
-                    cloCourseList.add(cloCList);
-                    cloPLOList.add(cloPList);
-                    cloTopicList.add(cloTList);
-                }
-            }
-
-            //Read Topic data
-            File topicKeyFile = new File(topicPath);
-            if(topicKeyFile.exists()){
-                Scanner myTopicReader = new Scanner(topicKeyFile);
-                while(myTopicReader.hasNextLine()){
-                    int tId = Integer.parseInt(myTopicReader.nextLine());
-                    String tDescription = myTopicReader.nextLine();
-                    String tCloList = myTopicReader.nextLine();
-
-                    Topics newTopics = new Topics(tId, tDescription);
-
-                    //add in list
-                    topicsList.add(newTopics);
-                    topicCloList.add(tCloList);
-                }
-            }
-
-            //Read Teachers data
-            File teacherKeyFile = new File(teachersPath);
-            if(teacherKeyFile.exists()){
-                Scanner myTeacherReader = new Scanner(teacherKeyFile);
-                while(myTeacherReader.hasNextLine()){
-                    int tId = Integer.parseInt(myTeacherReader.nextLine());
-                    String fullName = myTeacherReader.nextLine();
-                    String phoneNumber = myTeacherReader.nextLine();
-                    String address = myTeacherReader.nextLine();
-                    String username = myTeacherReader.nextLine();
-                    String password = myTeacherReader.nextLine();
-
-                    String tCourses = myTeacherReader.nextLine();
-                    String tEvaluations = myTeacherReader.nextLine();
-
-                    Teachers newTeacher = new Teachers(tId,fullName, phoneNumber, address, username, password);
-
-                    //add in list
-                    teachersList.add(newTeacher);
-                    teacherCourseList.add(tCourses);
-                    teacherEvaluationList.add(tEvaluations);
-                }
-            }
-
-            //Read Evaluations data
-            File EvaluationKeyFile = new File(evaluationsPath);
-            if(EvaluationKeyFile.exists()){
-                Scanner myEvaluationReader = new Scanner(EvaluationKeyFile);
-                while(myEvaluationReader.hasNextLine()){
-                    int eId = Integer.parseInt(myEvaluationReader.nextLine());
-                    String eName = myEvaluationReader.nextLine();
-                    int eTeacherId = Integer.parseInt(myEvaluationReader.nextLine()) ;
-                    String eType = myEvaluationReader.nextLine();
-
-                    String eQuestions = myEvaluationReader.nextLine();
-
-                    Teachers nTeacher = null;
-                    for (Teachers teacher :
-                            teachersList) {
-                        if(teacher.getTeacherID() == eTeacherId){
-                            nTeacher = teacher;
-                            break;
-                        }
-                    }
-
-                    Evaluations newEvaluation = null;
-                    if(eType.equals("quiz")){
-                        newEvaluation  = new Quizes(eId,eName,nTeacher);
-                    }else if(eType.equals("assignment")){
-                        newEvaluation  = new Assignment(eId,eName,nTeacher);
-                    }else{
-                        newEvaluation  = new Exam(eId,eName,nTeacher);
-                    }
-
-                    //add in list
-                    evaluationsList.add(newEvaluation);
-                    evaluationQuestionList.add(eQuestions);
-                }
-            }
-
-            //Read Questions data
-            File QuestionsKeyFile = new File(questionPath);
-            if(QuestionsKeyFile.exists()){
-                Scanner myQuestionReader = new Scanner(QuestionsKeyFile);
-                while(myQuestionReader.hasNextLine()){
-                    int qId = Integer.parseInt(myQuestionReader.nextLine());
-                    String qStatement = myQuestionReader.nextLine();
-                    int qCloId = Integer.parseInt(myQuestionReader.nextLine()) ;
-
-
-                    CLO nCLo = null;
-                    for (CLO clo :
-                            cloList) {
-                        if (clo.getId() == qCloId) {
-                            nCLo = clo;
-                        }
-                    }
-
-                    Questions newQuestion = new Questions(qId, qStatement,nCLo);
-
-                    //add in list
-                    questionsList.add(newQuestion);
-                }
-            }
-
-
-            //update all lists
-            int index = 0;
-
-            if(programsList != null) {
-                for (Programs program :
-                        programsList) {
-                    int id = program.getProgramID();        //get program id from array
-                    String pPlo = programPloList.get(index);     //get plo list
-                    String pCourse = programCoursesList.get(index);  //get course list
-
-                    //setup of plo's
-                    if (!Objects.equals(pPlo, "0")) {
-                        String[] splitArray1 = pPlo.split(",");
-                        List<Integer> arrayPloList = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            arrayPloList.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                arrayPloList) {
-                            PLO nPlo = null;
-                            for (PLO plo :
-                                    ploList) {
-                                if (plo.getId() == i) {
-                                    nPlo = plo;
-                                    break;
-                                }
-                            }
-                            program.addPlo(nPlo);
-                        }
-
-                    }
-
-                    //setup of courses
-                    if (!Objects.equals(pCourse, "0")) {
-                        String[] splitArray1 = pCourse.split(",");
-                        List<Integer> arrayCourseList = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            arrayCourseList.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                arrayCourseList) {
-                            Courses nCourse = null;
-                            for (Courses course :
-                                    coursesList) {
-                                if (course.getCourseID() == i) {
-                                    nCourse = course;
-                                    break;
-                                }
-                            }
-                            program.addCourse(nCourse);
-                        }
-                    }
-
-                    officer.addProgram(program);
-                    index++;
-                }
-            }
-
-            index = 0;
-            if(coursesList != null) {
-                for (Courses course :
-                        coursesList) {
-                    int id = course.getCourseID();
-                    String cProgram = courseProgramsList.get(index);
-                    String cTeacher = courseTeachersList.get(index);
-                    String cClo = courseCloList.get(index);
-
-                    if (!Objects.equals(cProgram, "0")) {
-                        String[] splitArray1 = cProgram.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            Programs nProgram = null;
-                            for (Programs program :
-                                    programsList) {
-                                if (program.getProgramID() == i) {
-                                    nProgram = program;
-                                    break;
-                                }
-                            }
-                            course.addProgram(nProgram);
-                        }
-                    }
-
-                    if (!Objects.equals(cTeacher, "0")) {
-                        String[] splitArray1 = cTeacher.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            Teachers nTeacher = null;
-                            for (Teachers teacher :
-                                    teachersList) {
-                                if (teacher.getTeacherID() == i) {
-                                    nTeacher = teacher;
-                                    break;
-                                }
-                            }
-                            course.addTeacher(nTeacher);
-                        }
-                    }
-
-                    if (!Objects.equals(cClo, "0")) {
-                        String[] splitArray1 = cClo.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            CLO nClo = null;
-                            for (CLO clo :
-                                    cloList) {
-                                if (clo.getId() == i) {
-                                    nClo = clo;
-                                    break;
-                                }
-                            }
-                            course.addCLO(nClo);
-                        }
-                    }
-                    index++;
-                }
-            }
-
-            index = 0;
-            if(ploList != null) {
-                for (PLO plo :
-                        ploList) {
-                    int id = plo.getId();
-                    String pCLO = ploCloList.get(index);
-                    //setup of clo
-                    if (!Objects.equals(pCLO, "0")) {
-                        String[] splitArray1 = pCLO.split(",");
-                        List<Integer> arrayCourseList = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            arrayCourseList.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                arrayCourseList) {
-                            CLO nClo = null;
-                            for (CLO clo :
-                                    cloList) {
-                                if (clo.getId() == i) {
-                                    nClo = clo;
-                                    break;
-                                }
-                            }
-                            plo.addCLO(nClo);
-                        }
-                    }
-                    index++;
-                }
-            }
-
-            index = 0;
-            if(cloList != null) {
-                for (CLO clo :
-                        cloList) {
-                    int id = clo.getId();
-                    String cCourse = cloCourseList.get(index);
-                    String cPLO = cloPLOList.get(index);
-                    String cTopic = cloTopicList.get(index);
-
-                    if (!Objects.equals(cCourse, "0")) {
-                        String[] splitArray1 = cCourse.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            Courses nCourse = null;
-                            for (Courses course :
-                                    coursesList) {
-                                if (course.getCourseID() == i) {
-                                    nCourse = course;
-                                    break;
-                                }
-                            }
-                            clo.addCloCoursesList(nCourse);
-                        }
-                    }
-
-                    if (!Objects.equals(cPLO, "0")) {
-                        String[] splitArray1 = cPLO.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            PLO nPlo = null;
-                            for (PLO plo :
-                                    ploList) {
-                                if (plo.getId() == i) {
-                                    nPlo = plo;
-                                    break;
-                                }
-                            }
-                            clo.addPLO(nPlo);
-                        }
-                    }
-
-                    if (!Objects.equals(cTopic, "0")) {
-                        String[] splitArray1 = cTopic.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            Topics nTopic = null;
-                            for (Topics topic :
-                                    topicsList) {
-                                if (topic.getTopicID() == i) {
-                                    nTopic = topic;
-                                    break;
-                                }
-                            }
-                            clo.addCloTopicList(nTopic);
-                        }
-                    }
-                    index++;
-                }
-            }
-
-            index = 0;
-            if(topicsList != null) {
-                for (Topics topic :
-                        topicsList) {
-                    int id = topic.getTopicID();
-                    String tClo = topicCloList.get(index);
-
-                    if (!Objects.equals(tClo, "0")) {
-                        String[] splitArray1 = tClo.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            CLO nClo = null;
-                            for (CLO clo :
-                                    cloList) {
-                                if (clo.getId() == i) {
-                                    nClo = clo;
-                                    break;
-                                }
-                            }
-                            topic.addTopicClo(nClo);
-                        }
-                    }
-                    index++;
-                }
-            }
-
-            index = 0;
-            if(teachersList != null) {
-                for (Teachers teacher :
-                        teachersList) {
-                    int id = teacher.getTeacherID();
-
-                    String tCourse = teacherCourseList.get(index);
-                    String tEvaluation = teacherEvaluationList.get(index);
-
-                    if (!Objects.equals(tCourse, "0")) {
-                        String[] splitArray1 = tCourse.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            Courses nCourse = null;
-                            for (Courses course :
-                                    coursesList) {
-                                if (course.getCourseID() == i) {
-                                    nCourse = course;
-                                    break;
-                                }
-                            }
-                            teacher.addCourse(nCourse);
-                        }
-                    }
-
-                    if (!Objects.equals(tEvaluation, "0")) {
-                        String[] splitArray1 = tEvaluation.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            Evaluations nEvaluation = null;
-                            for (Evaluations evaluation :
-                                    evaluationsList) {
-                                if (evaluation.getId() == i) {
-                                    nEvaluation = evaluation;
-                                    break;
-                                }
-                            }
-                            teacher.addEvaluation(nEvaluation);
-                        }
-                    }
-                    index++;
-                }
-            }
-
-            index = 0;
-            if(evaluationsList != null) {
-                for (Evaluations evaluation :
-                        evaluationsList) {
-                    int id = evaluation.getId();
-                    String eQues = evaluationQuestionList.get(index);
-
-                    if (!Objects.equals(eQues, "0")) {
-                        String[] splitArray1 = eQues.split(",");
-                        List<Integer> array = new ArrayList<>();
-                        for (String s : splitArray1) {
-                            array.add(Integer.parseInt(s));
-                        }
-
-                        for (Integer i :
-                                array) {
-                            Questions nQuestion = null;
-                            for (Questions question :
-                                    questionsList) {
-                                if (question.getId() == i) {
-                                    nQuestion = question;
-                                    break;
-                                }
-                            }
-                            evaluation.addQuestions(nQuestion);
-                        }
-                    }
-                    index++;
-                }
-            }
-
-//            Globals.programsList = programsList;
-//            Globals.coursesList = coursesList;
-//            Globals.ploList = ploList;
-//            Globals.cloList = cloList;
-//            Globals.topicsList = topicsList;
-
-        }
-        catch (Exception e){
-            System.out.println("Error Occurred: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-
 }

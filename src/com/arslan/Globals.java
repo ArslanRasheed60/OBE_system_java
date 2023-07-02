@@ -2,11 +2,7 @@ package com.arslan;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.DirectoryNotEmptyException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,24 +21,17 @@ public class Globals {
 //        Paths end
 
     //Lists start
-    public static List<AcademicOfficer> academicOfficerList = null;
     public static List<Programs> programsList = null;
     public static List<Courses> coursesList = null;
     public static List<PLO> ploList = null;
     public static List<CLO> cloList = null;
-
     public static List<Topics> topicsList = null;
-
     public static List<Teachers> teachersList = null;
-
     public static List<Questions> questionsList = null;
-
     public static List<Evaluations> evaluationsList = null;
-
     //Lists end
 
     // verifications starts
-
     public static boolean verifyAdministrator(String eUsername, String ePassword){
         try {
             File keyfile = new File(Globals.academicOfficersPath);
@@ -93,8 +82,8 @@ public class Globals {
 
     // verifications ends
 
-
     //filing    starts
+
     public static void saveCourse(){
         int count = 0;
         boolean flag = false;
@@ -163,9 +152,7 @@ public class Globals {
         }
     }
 
-
-    public static void savePLO()
-    {
+    public static void savePLO() {
         int count = 0;
         boolean flag = false;
 
@@ -284,7 +271,6 @@ public class Globals {
         }
         return userInput;
     }
-
     public static String getStringInput(){
         Scanner myInput = new Scanner(System.in);
         return myInput.nextLine();
@@ -293,7 +279,6 @@ public class Globals {
         Scanner myInput = new Scanner(System.in);
         return myInput.nextInt();
     }
-
     public static char getCheckInput(){
         Scanner myInput = new Scanner(System.in);
         char check = myInput.nextLine().toLowerCase().charAt(0);
@@ -306,7 +291,6 @@ public class Globals {
     //user input function ends
 
     //get object by id starts
-
     public static Courses getCourseById(int id){
         for (Courses course :
                 coursesList) {
@@ -316,7 +300,6 @@ public class Globals {
         }
         return null;
     }
-
     public static Teachers getTeacherById(int id){
         for (Teachers teacher :
                 teachersList) {
@@ -326,12 +309,9 @@ public class Globals {
         }
         return null;
     }
-
-
     //get object by id ends
 
     //duplicate testing starts
-
     public static boolean isDuplicateProgram(Programs nPrograms){
         if(programsList != null){
             for (Programs program :
@@ -343,7 +323,6 @@ public class Globals {
         }
         return false;
     }
-
     public static boolean isDuplicateCourse(Courses nCourse, List<Courses> nCourseList){
         if(nCourseList != null){
             for (Courses course :
@@ -377,7 +356,6 @@ public class Globals {
             }
             return false;
         }
-
     public static boolean isDuplicateTopic(Topics nTopic, List<Topics> nTopicList){
        if(nTopicList != null){
            for (Topics topic :
@@ -389,8 +367,73 @@ public class Globals {
        }
         return false;
     }
-
-
     //duplicate testing ends
+
+    //generate id's starts
+    public static int generateProgramId(AcademicOfficer academicOfficer){
+        int programID = academicOfficer.getProgramsList().size();
+        if (programID > 0) {
+            academicOfficer.getProgramsList().sort(Comparator.comparingLong(Programs::getProgramID));
+            programID = academicOfficer.getProgramsList().get(programID - 1).getProgramID();
+        }
+        programID++;
+        return programID;
+    }
+    public static int generateCourseId(){
+        int courseId = coursesList.size();
+        if (courseId > 0) {
+            coursesList.sort(Comparator.comparingLong(Courses::getCourseID));
+            courseId = coursesList.get(coursesList.size() - 1).getCourseID();
+        }
+        courseId++;
+        return  courseId;
+    }
+    public static int generatePloId(){
+        int ploId = ploList.size();
+        if (ploId > 0) {
+            ploList.sort(Comparator.comparingLong(PLO::getId));
+            ploId = ploList.get(ploList.size() - 1).getId();
+        }
+        ploId++;
+        return ploId;
+    }
+    public static int generateCloId(){
+        int cloId = Globals.cloList.size();                     //get clo list size
+        if (cloId > 0) {
+            cloList.sort(Comparator.comparingLong(CLO::getId));
+            cloId = cloList.get(cloList.size() - 1).getId();
+        }
+        cloId++;
+        return  cloId;
+    }
+
+    public static int generateTopicId(){
+        int tID = Globals.topicsList.size();
+        if (tID > 0) {
+            topicsList.sort(Comparator.comparingLong(Topics::getTopicID));
+            tID = topicsList.get(topicsList.size() - 1).getTopicID();
+        }
+        tID++;
+        return tID;
+    }
+    public static int generateQuestionId(){
+        int qID = questionsList.size();
+        if(qID > 0) {
+            Globals.questionsList.sort(Comparator.comparingLong(Questions::getId));
+            qID = Globals.questionsList.get(Globals.questionsList.size() - 1).getId();
+        }
+        qID++;
+        return qID;
+    }
+    public static int generateEvaluationId(){
+        int evaluationId = evaluationsList.size();
+        if (evaluationId > 0) {
+            Globals.evaluationsList.sort(Comparator.comparingLong(Evaluations::getId));
+            evaluationId = evaluationsList.get((evaluationsList.size() - 1)).getId();
+        }
+        evaluationId++;
+        return evaluationId;
+    }
+    //generate id's ends
 
 }

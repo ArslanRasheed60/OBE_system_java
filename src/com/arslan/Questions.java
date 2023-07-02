@@ -56,9 +56,9 @@ public class Questions {
                 keyfile.createNewFile();
             }
             FileWriter myWriter = new FileWriter(Globals.questionPath, append);
-            myWriter.write(Integer.toString(this.getId()) + "\n");
+            myWriter.write(this.getId() + "\n");
             myWriter.write(this.getStatement() + "\n");
-            myWriter.write(Integer.toString(this.getClo().getId()) + "\n");
+            myWriter.write(this.getClo().getId() + "\n");
 
             myWriter.close();
 
