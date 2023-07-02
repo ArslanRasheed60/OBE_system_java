@@ -18,6 +18,10 @@ public class Teachers extends Users {
         this.evaluationsList = new ArrayList<>();
     }
 
+    public void printTeacherDetails(){
+        System.out.println(this.teacherID + ": - > " + this.fullName);
+    }
+
     private void setTeacherID(int teacherID) {
         this.teacherID = teacherID;
     }
@@ -25,6 +29,11 @@ public class Teachers extends Users {
     public int getTeacherID() {
         return teacherID;
     }
+
+    public void addCourse(Courses course){
+        coursesList.add(course);
+    }
+
 
     public void setCoursesList(List<courseTeacher> coursesList) {
         this.coursesList = coursesList;
@@ -45,6 +54,24 @@ public class Teachers extends Users {
     public List<Evaluations> getEvaluationsList() {
         return evaluationsList;
     }
+
+    public void printEvaluations(){
+        for (Evaluations evaluation :
+                this.evaluationsList) {
+            evaluation.printEvaluationDetails();
+        }
+    }
+
+    public Evaluations getEvaluationById(int id){
+        for (Evaluations evaluation :
+                this.evaluationsList) {
+            if(evaluation.getId() == id){
+                return evaluation;
+            }
+        }
+        return null;
+    }
+
 
     public void printCourses() {
         for (courseTeacher course :
@@ -87,15 +114,26 @@ public class Teachers extends Users {
             }
             FileWriter myWriter = new FileWriter(Globals.teachersPath, append);
             myWriter.write(Integer.toString(this.getTeacherID()) + "\n");
-/*
-            myWriter.write(this.getDescription() + "\n");
+            myWriter.write(this.fullName + "\n");
+            myWriter.write(this.phoneNumber + "\n");
+            myWriter.write(this.address + "\n");
+            myWriter.write(this.username + "\n");
+            myWriter.write(this.password + "\n");
+
             String newArray = "";
-            for (Courses course :
-                    cloCoursesList) {
+            for (courseTeacher course :
+                    coursesList) {
                 newArray = newArray.concat(Integer.toString(course.getCourseID()) + ",");
             }
             myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
-*/
+
+            newArray = "";
+            for (Evaluations evaluation :
+                    evaluationsList) {
+                newArray = newArray.concat(Integer.toString(evaluation.getId()) + ",");
+            }
+            myWriter.write((newArray.equals("") ?"0":newArray) + "\n");
+
             myWriter.close();
 
         } catch (Exception e) {

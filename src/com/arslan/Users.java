@@ -2,13 +2,13 @@ package com.arslan;
 
 public class Users {
 //    private int id;
-    private String fullName;
-    private String phoneNumber;
-    private String address;
+    protected String fullName;
+    protected String phoneNumber;
+    protected String address;
 
-    private String username;
+    protected String username;
 
-    private String password;
+    protected String password;
 
     public Users (){
 

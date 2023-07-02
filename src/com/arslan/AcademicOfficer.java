@@ -1,6 +1,5 @@
 package com.arslan;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -10,31 +9,14 @@ import java.util.Set;
 public class AcademicOfficer extends Users{
     public static boolean isAcademicOfficer;
     private List<Programs> programsList;
-
-    public AcademicOfficer(){
-        super(null,null,null,null,null);
-        isAcademicOfficer=false;
-    }
-
     public AcademicOfficer (String fullName, String phoneNumber, String address, String username, String password){
         super(fullName,phoneNumber, address, username, password);
         programsList = new ArrayList<>();
-
-        if(fullName.length() > 2){
-            isAcademicOfficer = true;
-        }else{
-            isAcademicOfficer = false;
-        }
+        isAcademicOfficer = fullName.length() > 2;
     };
-
     public void addProgram(Programs program) {
         programsList.add(program);
     }
-
-    public void removeProgram(Programs program){
-        programsList.remove(program);
-    }
-
     public List<Programs> getProgramsList() {
         return programsList;
     }
@@ -54,18 +36,6 @@ public class AcademicOfficer extends Users{
             }
         }
         return null;
-    }
-
-    public void updateProgramFile(){
-        int count = 0;
-        boolean flag = false;
-
-        for (Programs deleteProgram :
-                this.programsList) {
-            flag = count >= 1;
-            deleteProgram.saveInFile(flag);
-            count++;
-        }
     }
 
     public <T> List<T> union(List<T> list1, List<T> list2) {

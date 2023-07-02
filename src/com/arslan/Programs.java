@@ -67,6 +67,7 @@ public Programs(int programID, String  programDegreeType, String programName, Li
     public void printAllCourses(){
         for (CourseOfficer course :
                 this.getProgramCoursesList()) {
+            System.out.println(course.getCourseID() + " : -> " + course.getCourseName() + " : -> " + course.getCourseCreditHours() + " ");
         }
     }
 

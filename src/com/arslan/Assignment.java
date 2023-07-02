@@ -5,13 +5,15 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Quizes extends Evaluations {
-    Quizes(int id, String name ,Teachers teacher){
+public class Assignment extends Evaluations{
+
+    Assignment(int id, String name ,Teachers teacher){
         this.id = id;
         this.EvaluationName = name;
         this.teacher = teacher;
         questionsList = new ArrayList<>();
     }
+
     @Override
     public int getId(){
         return id;
@@ -19,7 +21,7 @@ public class Quizes extends Evaluations {
 
     @Override
     public void addQuestions(Questions questions) {
-            this.questionsList.add(questions);
+        this.questionsList.add(questions);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class Quizes extends Evaluations {
             myWriter.write(Integer.toString(this.getId()) + "\n");
             myWriter.write(this.EvaluationName + "\n");
             myWriter.write(Integer.toString(this.teacher.getTeacherID()) + "\n");
-            myWriter.write("quiz" + "\n");
+            myWriter.write("assignment" + "\n");
 
             String newArray = "";
             for (Questions question :
@@ -85,5 +87,4 @@ public class Quizes extends Evaluations {
             e.printStackTrace();
         }
     }
-
 }
